@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Expense;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -14,6 +15,7 @@ class ExpenseController extends Controller
     public function index()
     {
         //
+		return view('expense.index');
     }
 
     /**
@@ -40,10 +42,10 @@ class ExpenseController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Expense $expense)
     {
         //
     }
@@ -51,10 +53,10 @@ class ExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Expense $expense)
     {
         //
     }
@@ -63,10 +65,10 @@ class ExpenseController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Expense $expense)
     {
         //
     }
@@ -74,10 +76,10 @@ class ExpenseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Expense $expense)
     {
         //
     }
