@@ -18,6 +18,7 @@ class CreateExpensesTable extends Migration
 			$table->unsignedInteger('expense_type_id');
 			$table->decimal('amount', 6, 2);
 			$table->string('description');
+			$table->date('date');
             $table->timestamps();
         });
     }
