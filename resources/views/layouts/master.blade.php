@@ -7,8 +7,7 @@
 		<title>@Budgets - @yield('page_title')</title>
 
 		<!-- CSS -->
-		<link rel="stylesheet" href="/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="/css/app.css">
 
 		<style>
 			.header, .footer {
@@ -21,9 +20,6 @@
 			}
 		</style>
 
-		<!-- JavaScript -->
-		<script src="/js/jquery-3.0.0.min.js"></script>
-		<script src="/js/bootstrap.min.js"></script>
 
 	</head>
 	<body>
@@ -31,11 +27,14 @@
 		<div class="header">
 			Budgets
 		</div>
-		<div class="container">
+		<div id="page_content">
 			@yield('content')
 		<div>
+		<div class="clearfix"></div>
 		<div class="footer">
 			Copyright &copy; Kyler Johnson 2017
 		</div>
+		<!-- JavaScript -->
+		<script src="/js/app.js"></script>
 	</body>
 </html>
