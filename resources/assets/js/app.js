@@ -21,8 +21,8 @@ const app = new Vue({
 });
 */
 
+/*
 var Chart = require('chart.js');
-console.log('here');
 
 var ctx = document.getElementById("myChart");
 var myChart = new Chart(ctx, {
@@ -62,3 +62,4 @@ var myChart = new Chart(ctx, {
     }
 });
 console.log(myChart);
+*/

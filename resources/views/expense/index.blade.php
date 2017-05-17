@@ -1,15 +1,37 @@
 @extends('layouts.master')
 
+@section('scripts')
+
+<script src="/js/chart_functions.js"></script>
+<script>
+// Initialize variables from server
+var chart_data_object = {};
+
+@foreach ($expense_types as $expense_type)
+	chart_data_object["{{ $expense_type->name }}"] = {{ $expense_type->expense()->sum("amount") }};
+@endforeach
+
+// Let's run our functions
+plotChart($("#monthlySpendingChart"), "pie", JSON.stringify(chart_data_object), "");
+
+</script>
+
+@endsection
+
 @section('content')
 
+<section>
 <div class="container">
 	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-4 col-md-offset-1">
 			Overview of current spending (graph)
-			<canvas id="myChart" width="400" height="400"></canvas>
+			<canvas id="monthlySpendingChart" width="400" height="400"></canvas>
 		</div>
 	</div>
 </div>
+</section>
+
+<section>
 <div class="container">
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
@@ -50,12 +72,6 @@
 		</div>
 	</div>
 </div>
-<script>
-/*
-	$('button').on('click', function(){
-		alert('Button click.');
-	});
-	*/
-	</script>
+</section>
 
 @endsection

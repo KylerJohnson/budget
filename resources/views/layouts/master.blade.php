@@ -9,32 +9,38 @@
 		<!-- CSS -->
 		<link rel="stylesheet" href="/css/app.css">
 
+		<!-- TODO: refactor css out to external file -->
 		<style>
-			.header, .footer {
+			header, footer {
 				text-align: center;
 				padding-top: 30px;
 				padding-bottom: 30px;
 			}
-			.header {
+			header {
 				font-size: 2em;
 			}
 		</style>
-
-
 	</head>
 	<body>
-		<!-- TODO: Put in some sort of nav bar -->
-		<div class="header">
+
+		<header>
 			Budgets
-		</div>
-		<div id="page_content">
+		</header>
+		<!-- TODO: Put in some sort of nav bar -->
+
+		<main id="page_content">
 			@yield('content')
-		<div>
+		<main>
+
 		<div class="clearfix"></div>
-		<div class="footer">
+
+		<footer>
 			Copyright &copy; Kyler Johnson 2017
-		</div>
+		</footer>
+
 		<!-- JavaScript -->
 		<script src="/js/app.js"></script>
+		@yield('scripts')
+
 	</body>
 </html>
