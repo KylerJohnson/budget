@@ -9,10 +9,12 @@ var background_color_defaults = [
 	"#36A2EB",
 	"#FFCE56",
 	"#CE2D4F",
-	"#CEBBC9",
+	"#434371",
 	"#81F4E1",
-	"#56CBF9",
-	"#8FC93A"
+	"#8FC93A",
+	"#79AEA3",
+	"#E18335",
+	"#556F44"
 ];
 
 // A simple wrapper around the Chart.js functionality
