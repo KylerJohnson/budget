@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Expense;
+use App\ExpenseType;
 use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
@@ -14,9 +15,10 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        //
+		// look into eager loading for pulling in the sums of each expense type
 		$expenses = Expense::all();
-		return view('expense.index', compact('expenses'));
+		$expense_types = ExpenseType::all();
+		return view('expense.index', compact('expenses', 'expense_types'));
     }
 
     /**
