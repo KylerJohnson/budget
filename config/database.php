@@ -48,7 +48,7 @@ return [
             'password' => env('DB_PASSWORD', 'meznTAFxTj28ZDxv'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => 'budgets_',
+            'prefix' => '',
             'strict' => true,
             'engine' => null,
         ],
