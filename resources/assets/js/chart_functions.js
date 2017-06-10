@@ -72,3 +72,71 @@ window.plotChart = function (target, chart_type, data_JSON, options){
 		}
 	});
 }
+
+window.plotLineChartTEMP = function(target){
+	// this is a temporary function that I'm using
+	// to test out the line charts.  If I like what I see,
+	// it needs to be merged into the plotChart function.
+	var data = {
+		labels: ["January", "February", "March", "April", "May", "June", "July"],
+		datasets: [
+			{
+				label: "My First dataset",
+				fill: true,
+				lineTension: 0.2,
+				backgroundColor: "rgba(75,192,192,0.4)",
+				borderColor: "rgba(75,192,192,1)",
+				borderCapStyle: 'butt',
+				borderDash: [],
+				borderDashOffset: 0.0,
+				borderJoinStyle: 'miter',
+				pointBorderColor: "rgba(75,192,192,1)",
+				pointBackgroundColor: "#fff",
+				pointBorderWidth: 1,
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(75,192,192,1)",
+				pointHoverBorderColor: "rgba(220,220,220,1)",
+				pointHoverBorderWidth: 2,
+				pointRadius: 1,
+				pointHitRadius: 10,
+				data: [65, 59, 80, 81, 56, 55, 40],
+				spanGaps: false,
+			},
+			{
+				label: "My Second dataset",
+				fill: true,
+				lineTension: 0.2,
+				backgroundColor: "rgba(7,12,12,0.4)",
+				borderColor: "rgba(7,12,12,1)",
+				borderCapStyle: 'butt',
+				borderDash: [],
+				borderDashOffset: 0.0,
+				borderJoinStyle: 'miter',
+				pointBorderColor: "rgba(75,192,192,1)",
+				pointBackgroundColor: "#fff",
+				pointBorderWidth: 1,
+				pointHoverRadius: 5,
+				pointHoverBackgroundColor: "rgba(75,192,192,1)",
+				pointHoverBorderColor: "rgba(220,220,220,1)",
+				pointHoverBorderWidth: 2,
+				pointRadius: 1,
+				pointHitRadius: 10,
+				data: [60, 30, 36, 44, 70, 60, 67],
+				spanGaps: false,
+			}
+		]
+	};
+	var myLineChart = new Chart(target, {
+		type: 'line',
+		data: data,
+		options: {
+			scales: {
+				xAxes: [{
+					display: false
+				}]
+			}
+		}
+	});
+
+
+}

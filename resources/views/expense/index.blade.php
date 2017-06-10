@@ -14,6 +14,8 @@ var chart_data_object = {};
 // Let's run our functions
 plotChart($("#monthlySpendingChart"), "pie", JSON.stringify(chart_data_object), "");
 
+plotLineChartTEMP($("#historicalSpendingChart"));
+
 </script>
 
 @endsection
@@ -21,10 +23,15 @@ plotChart($("#monthlySpendingChart"), "pie", JSON.stringify(chart_data_object), 
 @section('content')
 
 <div class="row">
-	<div class="col-md-offset-3 col-md-5">
-		<b>Overview of current spending (graph)</b>
+	<div class="col-md-4">
+		<b>Current Month's Spending</b>
 
 		<canvas id="monthlySpendingChart" width="400" height="400"></canvas>
+	</div>
+	<div class="col-md-4 col-md-offset-2">
+		<b>Historical Spending by Month</b>
+
+		<canvas id="historicalSpendingChart" width="600" height="400"></canvas>
 	</div>
 	<div class="col-md-12">
 		<div class="panel panel-default">
