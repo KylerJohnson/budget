@@ -28,7 +28,7 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 
 		<canvas id="monthlySpendingChart" width="400" height="400"></canvas>
 	</div>
-	<div class="col-md-8">
+	<div class="col-md-4 col-md-offset-2">
 		<b>Historical Spending by Month</b>
 
 		<canvas id="historicalSpendingChart" width="600" height="400"></canvas>
