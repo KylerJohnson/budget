@@ -9,3 +9,11 @@ Homestead.yaml
 .env
 *.sw[a-p]
 gittracking.txt
+
+/public/css
+# not generated css
+!/public/css/dashboard.css
+
+/public/js
+
+/public/mix-manifest.json
