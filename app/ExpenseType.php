@@ -9,7 +9,7 @@ class ExpenseType extends Model
     //
 
 	protected $fillable = ['name'];
-	public function expense()
+	public function expenses()
 	{
 		return $this->hasMany('App\Expense');
 	}
