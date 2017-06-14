@@ -22,3 +22,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Expense::class, function(Faker\Generator $faker) {
+	return [
+		'expense_type_id' => $faker->numberBetween(1, 10),
+		'amount' => $faker->numberBetween(5, 300),
+		'description' => $faker->word,
+		'date' => $faker->dateTimeThisYear()
+	];
+});
