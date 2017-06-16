@@ -8,7 +8,7 @@
 var chart_data_object = {};
 
 @foreach ($expense_types as $expense_type)
-	chart_data_object["{{ $expense_type->name }}"] = {{ $expense_type->expense()->sum("amount") }};
+	chart_data_object["{{ $expense_type->name }}"] = {{ $expense_type->expenses->sum("amount") }};
 @endforeach
 
 // Let's run our functions
@@ -24,7 +24,7 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 
 <div class="row">
 	<div class="col-md-4">
-		<b>Current Month's Spending</b>
+		<b>Spending for {{ $date->format('F Y') }}</b>
 
 		<canvas id="monthlySpendingChart" width="400" height="400"></canvas>
 	</div>
@@ -35,7 +35,7 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 	</div>
 	<div class="col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Expenses</div>
+			<div class="panel-heading">Expenses for {{ $date->format('F Y') }}</div>
 			<div class="panel-body">
 				<p>
 					The list of our expenses is included in the table below.  There should be some more features to talk about soon!
@@ -51,8 +51,8 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($expenses)>0)
-						@foreach ($expenses as $expense)
+					@if (count($monthly_expenses)>0)
+						@foreach ($monthly_expenses as $expense)
 							<tr>
 								<td>{{ $expense->expense_type->name }}</td>
 								<td>{{ $expense->amount }}</td>

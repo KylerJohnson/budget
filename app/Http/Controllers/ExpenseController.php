@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Expense;
 use App\ExpenseType;
 use Illuminate\Http\Request;
+use DateTime;
 
 class ExpenseController extends Controller
 {
@@ -13,12 +14,20 @@ class ExpenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($month = null, $year = null)
     {
-		// look into eager loading for pulling in the sums of each expense type
-		$expenses = Expense::all();
-		$expense_types = ExpenseType::all();
-		return view('expense.index', compact('expenses', 'expense_types'));
+		try{
+			$date = new DateTime($year.'-'.$month);
+		}catch (\Exception $e){
+			$date = new DateTime;
+		}
+
+		$monthly_expenses = Expense::yearAndMonth($date)->with('expense_type')->get();
+		$expense_types = ExpenseType::with(['expenses'=> function($query) use ($date){
+			$query->yearAndMonth($date);
+		}])->get();
+
+		return view('expense.index', compact('monthly_expenses', 'expense_types', 'date'));
     }
 
     /**
@@ -29,6 +38,7 @@ class ExpenseController extends Controller
     public function create()
     {
         //
+		echo "create";
     }
 
     /**
@@ -51,6 +61,7 @@ class ExpenseController extends Controller
     public function show(Expense $expense)
     {
         //
+		echo "show";
     }
 
     /**
