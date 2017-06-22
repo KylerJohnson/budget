@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Expense;
 use App\ExpenseType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use DateTime;
 
 class ExpenseController extends Controller
@@ -16,18 +17,28 @@ class ExpenseController extends Controller
      */
     public function index($month = null, $year = null)
     {
+		// Try and build a date from the request parameters.
+		// If it fails, default to the current date.
 		try{
 			$date = new DateTime($year.'-'.$month);
 		}catch (\Exception $e){
 			$date = new DateTime;
 		}
 
-		$monthly_expenses = Expense::yearAndMonth($date)->with('expense_type')->get();
-		$expense_types = ExpenseType::with(['expenses'=> function($query) use ($date){
-			$query->yearAndMonth($date);
-		}])->get();
+		$expenses = Expense::select(
+			'expense_type_id',
+			'amount',
+			'description',
+			'date',
+			DB::raw('YEAR(date) AS year, MONTH(date) AS month')
+		)->with('expense_type')->get();
 
-		return view('expense.index', compact('monthly_expenses', 'expense_types', 'date'));
+		$current_month_expenses = $expenses->where('year', $date->format('Y'))
+			->where('month', $date->format('m'));
+		
+		$expense_types = ExpenseType::get();
+
+		return view('expense.index', compact('expenses', 'current_month_expenses', 'expense_types', 'date'));
     }
 
     /**
