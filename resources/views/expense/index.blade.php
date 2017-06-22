@@ -3,17 +3,28 @@
 @section('scripts')
 
 <script src="/js/chart_functions.js"></script>
-<script>
-// Initialize variables from server
-var chart_data_object = {};
 
-@foreach ($expense_types as $expense_type)
-	chart_data_object["{{ $expense_type->name }}"] = {{ $expense_type->expense()->sum("amount") }};
+<script>
+
+// Initialize variables from server
+
+// Monthly variables
+var current_month_expense_totals = {
+	@foreach($expense_types as $expense_type)
+		"{{ $expense_type->name }}": 0,
+	@endforeach
+};
+
+@foreach($current_month_expenses as $current_month_expense)
+	current_month_expense_totals["{{ $current_month_expense->expense_type->name }}"] += {{ $current_month_expense->amount }};
 @endforeach
 
 // Let's run our functions
-plotChart($("#monthlySpendingChart"), "pie", JSON.stringify(chart_data_object), "");
 
+// Current Month Spending Chart
+plotChart($("#currentMonthSpendingChart"), "pie", JSON.stringify(current_month_expense_totals), "");
+
+// Historical Spending Chart
 plotLineChartTEMP($("#historicalSpendingChart"));
 
 </script>
@@ -24,9 +35,9 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 
 <div class="row">
 	<div class="col-md-4">
-		<b>Current Month's Spending</b>
+		<b>Spending for {{ $date->format('F Y') }}</b>
 
-		<canvas id="monthlySpendingChart" width="400" height="400"></canvas>
+		<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
 	</div>
 	<div class="col-md-4 col-md-offset-2">
 		<b>Historical Spending by Month</b>
@@ -35,7 +46,7 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 	</div>
 	<div class="col-md-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Expenses</div>
+			<div class="panel-heading">Expenses for {{ $date->format('F Y') }}</div>
 			<div class="panel-body">
 				<p>
 					The list of our expenses is included in the table below.  There should be some more features to talk about soon!
@@ -51,8 +62,8 @@ plotLineChartTEMP($("#historicalSpendingChart"));
 					</tr>
 				</thead>
 				<tbody>
-					@if (count($expenses)>0)
-						@foreach ($expenses as $expense)
+					@if (count($current_month_expenses)>0)
+						@foreach ($current_month_expenses as $expense)
 							<tr>
 								<td>{{ $expense->expense_type->name }}</td>
 								<td>{{ $expense->amount }}</td>

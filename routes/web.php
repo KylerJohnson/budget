@@ -15,5 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Note: this route will hijack the show action on ExpenseController.
+// At the moment, it doesn't seem to be an issue, as the action isn't
+// used.
+Route::get('expenses/{month}/{year}', 'ExpenseController@index');
+
+/*function($month, $year){
+	return redirect()->action(
+		'ExpenseController@index', ['month'=>$month, 'year'=>$year]
+	);
+})->where(['month' => '[0-9]+', 'year' => '[0-9]+']);
+ */
+
 Route::resource('expenses', 'ExpenseController');
+
 Route::resource('expense_types', 'ExpenseTypeController');
