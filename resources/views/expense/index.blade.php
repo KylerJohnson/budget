@@ -19,10 +19,60 @@ var current_month_expense_totals = {
 	current_month_expense_totals["{{ $current_month_expense->expense_type->name }}"] += {{ $current_month_expense->amount }};
 @endforeach
 
+// Historical Variables
+var historical_expense_totals = {
+	@foreach($expense_types as $expense_type)
+		"{{ $expense_type->name }}": [],
+	@endforeach
+};
+
+// Note: The following is intended to loop through the expenses and
+// assign the totals for each expense type to a month/year.  Towards
+// being able to loop through by month, I had a look in both PHP and
+// JavaScript and I couldn't find any good "next-month" methods
+// either in JavaScript or PHP.  As such, I'm making my own.  The
+// main issue is that the next month methods that do exist are
+// primitive.  As in, given January 31, the next month would be 
+// February 31.  This impossibility would be resolved to March 3, or
+// March 2, depending on leap years.  For simplicity, and control, I
+// am choosing to create a double loop over month's and years and
+// parse the data accordingly.  A good TODO would be to update this
+// with a better next month style loop if such a method is found.
+
+// Get the oldest and newest dates where expenses occurred.
+var expense_start_month = {{ (new DateTime($expenses->min('date')))->format('m') }};
+var expense_start_year = {{ (new DateTime($expenses->min('date')))->format('Y') }};
+
+var expense_end_month = {{ (new DateTime($expenses->max('date')))->format('m') }};
+var expense_end_year = {{ (new DateTime($expenses->max('date')))->format('Y') }};
+
+var month_loop = expense_start_month;
+var year_loop = expense_start_year;
+
+// Loop through month
+while(month_loop <= $expense_end_month && year_loop <= $expense_end_year){
+
+	for(var expense_type_loop in historical_expense_totals){
+		historical_expense_totals[expense_type_loop].push(
+			$expenses->where('month', month_loop)
+			->where('year', year_loop)
+		)
+	}
+	//foreach historical expense total
+		// push totals for that expense/year and month to that field.
+	
+	// iterate loop variables
+	month_loop ++;
+	if(month_loop % 12 == 1){
+		year_loop++;
+	}
+}
+
+
 // Let's run our functions
 
 // Current Month Spending Chart
-plotChart($("#currentMonthSpendingChart"), "pie", JSON.stringify(current_month_expense_totals), "");
+plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, "");
 
 // Historical Spending Chart
 plotLineChartTEMP($("#historicalSpendingChart"));

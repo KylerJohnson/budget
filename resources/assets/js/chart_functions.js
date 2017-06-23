@@ -18,7 +18,7 @@ var background_color_defaults = [
 ];
 
 // A simple wrapper around the Chart.js functionality
-window.plotChart = function (target, chart_type, data_JSON, options){
+window.plotChart = function (target, chart_type, dataObject, options){
 	
 	// target: What element on the page to use
 	// chart_type: bar, line, pie etc.
@@ -32,9 +32,6 @@ window.plotChart = function (target, chart_type, data_JSON, options){
 	
 	// Get the canvas using the target option
 	var ctx = target;
-
-	// Parse the data JSON string
-	var dataObject = JSON.parse(data_JSON);
 
 	// We will generate some fields based on the data passed in
 
