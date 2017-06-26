@@ -19,13 +19,20 @@ var current_month_expense_totals = {
 	current_month_expense_totals["{{ $current_month_expense->expense_type->name }}"] += {{ $current_month_expense->amount }};
 @endforeach
 
+/// TESTING ///
+
+var expense_totals = {!! json_encode($expense_totals) !!};
+console.log(expense_totals);
+
+/// END TESTING ///
+
 // Let's run our functions
 
 // Current Month Spending Chart
-plotChart($("#currentMonthSpendingChart"), "pie", JSON.stringify(current_month_expense_totals), "");
+plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, "");
 
 // Historical Spending Chart
-plotLineChartTEMP($("#historicalSpendingChart"));
+plotLineChart($("#historicalSpendingChart"), expense_totals);
 
 </script>
 
