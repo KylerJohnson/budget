@@ -19,6 +19,7 @@ Route::get('/', function () {
 // At the moment, it doesn't seem to be an issue, as the action isn't
 // used.
 Route::get('expenses/{month}/{year}', 'ExpenseController@index');
+Route::get('expenses/create/{month}/{year}', 'ExpenseController@create');
 
 /*function($month, $year){
 	return redirect()->action(

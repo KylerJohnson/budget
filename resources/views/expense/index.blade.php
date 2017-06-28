@@ -19,12 +19,7 @@ var current_month_expense_totals = {
 	current_month_expense_totals["{{ $current_month_expense->expense_type->name }}"] += {{ $current_month_expense->amount }};
 @endforeach
 
-/// TESTING ///
-
 var expense_totals = {!! json_encode($expense_totals) !!};
-console.log(expense_totals);
-
-/// END TESTING ///
 
 // Let's run our functions
 
@@ -83,7 +78,7 @@ plotLineChart($("#historicalSpendingChart"), expense_totals);
 					@endif
 				</tbody>
 			</table>
-			<a href="create"><button class="btn btn-primary">Add an expense</button></a>
+			<a href="/expenses/create/{{ $date->format('m') }}/{{ $date->format('Y') }}"><button class="btn btn-primary">Add an expense</button></a>
 			<button>Click </button>
 		</div>
 	</div><!-- div.col-md-3 -->

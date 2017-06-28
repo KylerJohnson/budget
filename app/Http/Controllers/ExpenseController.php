@@ -67,29 +67,29 @@ class ExpenseController extends Controller
 
 				$current_month_expense_loop_sum = 
 					$current_month_expenses_loop->filter(function($value, $key) use ($expense_type){
-							return $value->expense_type->name == "$expense_type";
+							return $value->expense_type->name == $expense_type;
 						})->sum('amount');
 
 				// Arrays of data associated with each expense type.
 				// Each array's entries correspond to data for a
 				// given month.
-				$expense_totals[$expense_type]["amount"][] = $current_month_expense_loop_sum;
-				$expense_totals[$expense_type]["month"][] = $date_loop->format("m");
-				$expense_totals[$expense_type]["year"][] = $date_loop->format("Y");
-				$expense_totals[$expense_type]["displayDate"][] = $date_loop->format("F Y");
+				$expense_totals[$expense_type]['amount'][] = $current_month_expense_loop_sum;
+				$expense_totals[$expense_type]['month'][] = $date_loop->format('m');
+				$expense_totals[$expense_type]['year'][] = $date_loop->format('Y');
+				$expense_totals[$expense_type]['displayDate'][] = $date_loop->format('F Y');
 
 			}
 
 			// Iterate 
 
-			// I haven't been able to find any good "next month" type
+			// I haven't been able to find any good 'next month' type
 			// functions in either JavaScript or PHP.  The issue with
 			// most is odd day reconciling.  For example, January 31
 			// plus a month would be March 3 or March 2 depending on
 			// leap years.  Since I only care about months and years,
 			// the following seemed to be the simplest
 			
-			$date_loop = new DateTime($date_loop->add(new DateInterval("P1M"))->format("Y-m"));
+			$date_loop = new DateTime($date_loop->add(new DateInterval('P1M'))->format('Y-m'));
 
 			if($newest_expense_date->diff($date_loop)->invert == 1){
 				$litmus = true;
@@ -108,10 +108,19 @@ class ExpenseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($month = null, $year = null)
     {
-        //
-		echo "create";
+		// Try and build a date from the request parameters.
+		// If it fails, default to the current date.
+		try{
+			$date = new DateTime($year.'-'.$month);
+		}catch (\Exception $e){
+			$date = new DateTime;
+		}
+
+		$expense_types = ExpenseType::select('id', 'name')->get();
+
+		return view('expense.create', compact('date', 'expense_types'));
     }
 
     /**
@@ -123,6 +132,30 @@ class ExpenseController extends Controller
     public function store(Request $request)
     {
         //
+		$this->validate($request, [
+			'expense_type' => 'required|exists:expense_types,id',
+			'description' => 'required|min:5',
+			'amount' => 'required|numeric',
+			'date' => 'required|date'
+		]);
+		echo 'store';
+
+		$expense = new Expense;
+
+		$expense->expense_type_id = $request->expense_type;
+		$expense->amount = $request->amount;
+		$expense->description = $request->description;
+		$expense->date = $request->date;
+
+		$expense->save();
+
+		try{
+			$date = new DateTime($request->date);
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}catch(\Exception $e){
+			return redirect('expenses');
+		}
+
     }
 
     /**
@@ -134,7 +167,7 @@ class ExpenseController extends Controller
     public function show(Expense $expense)
     {
         //
-		echo "show";
+		echo 'show';
     }
 
     /**
