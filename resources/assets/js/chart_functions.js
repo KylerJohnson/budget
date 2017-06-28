@@ -65,7 +65,10 @@ window.plotChart = function (target, chart_type, data_Object, options){
 		options: {
 			legend: {
 				position: "right",
-				fullWidth: false
+				fullWidth: false,
+				labels: {
+					boxWidth: 10
+				}
 			}
 		}
 	});
@@ -77,6 +80,7 @@ window.plotLineChart = function(target, data_Object, options){
 
 	// We will generate some fields based on the data passed in
 	var data_labels = Object.keys(data_Object); 
+	console.log(data_labels);
 	var background_colors = background_color_defaults.slice(0,data_labels.length);
 	var labels = data_Object[data_labels[0]]["displayDate"];
 	var datasets = [];
@@ -121,8 +125,11 @@ window.plotLineChart = function(target, data_Object, options){
 				}]
 			},
 			legend: {
-				position: "top",
-				fullWidth: false
+				position: "right",
+				fullWidth: false,
+				labels: {
+					boxWidth: 10
+				}
 			}
 		}
 	});
