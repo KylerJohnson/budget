@@ -29,6 +29,13 @@ plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, 
 // Historical Spending Chart
 plotLineChart($("#historicalSpendingChart"), expense_totals);
 
+$(function(){
+	$("tr").on("click", function(){
+		console.log($(this).attr("data-expenseId"));
+		window.location = "/expenses/"+$(this).attr("data-expenseId")+"/edit";
+	});
+})
+
 </script>
 
 @endsection
@@ -64,6 +71,7 @@ plotLineChart($("#historicalSpendingChart"), expense_totals);
 				</p>
 			</div>
 			<table class="table table-striped">
+			<table class="table table-striped clickable">
 				<thead>
 					<tr>
 						<th>Expense Type</th>
@@ -75,7 +83,7 @@ plotLineChart($("#historicalSpendingChart"), expense_totals);
 				<tbody>
 					@if (count($current_month_expenses)>0)
 						@foreach ($current_month_expenses as $expense)
-							<tr>
+							<tr data-expenseId="{{ $expense->id }}">
 								<td>{{ $expense->expense_type->name }}</td>
 								<td>{{ $expense->amount }}</td>
 								<td>{{ $expense->description }}</td>

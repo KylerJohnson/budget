@@ -27,6 +27,7 @@ class ExpenseController extends Controller
 		}
 
 		$expenses = Expense::select(
+			'id',
 			'expense_type_id',
 			'amount',
 			'description',
@@ -181,6 +182,9 @@ class ExpenseController extends Controller
     public function edit(Expense $expense)
     {
         //
+		$expense_types = ExpenseType::all();
+		
+		return view('expense.edit', compact('expense', 'expense_types'));
     }
 
     /**
@@ -193,6 +197,28 @@ class ExpenseController extends Controller
     public function update(Request $request, Expense $expense)
     {
         //
+		$this->validate($request, [
+			'expense_type' => 'required|exists:expense_types,id',
+			'description' => 'required|min:5',
+			'amount' => 'required|numeric',
+			'date' => 'required|date'
+		]);
+
+		$expense->expense_type_id = $request->expense_type;
+		$expense->amount = $request->amount;
+		$expense->description = $request->description;
+		$expense->date = $request->date;
+
+		$expense->save();
+
+		$request->session()->flash('status', 'Your expense was updated successfully!');
+
+		try{
+			$date = new DateTime($request->date);
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}catch(\Exception $e){
+			return redirect('expenses');
+		}
     }
 
     /**

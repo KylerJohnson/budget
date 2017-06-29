@@ -18,6 +18,7 @@ Route::get('/', function () {
 // Note: this route will hijack the show action on ExpenseController.
 // At the moment, it doesn't seem to be an issue, as the action isn't
 // used.
+Route::get('expenses/{expense}/edit', 'ExpenseController@edit');
 Route::get('expenses/{month}/{year}', 'ExpenseController@index');
 Route::get('expenses/create/{month}/{year}', 'ExpenseController@create');
 
