@@ -226,8 +226,28 @@ class ExpenseController extends Controller
      * @param  \App\Expense  $expense
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Expense $expense)
+    public function destroy(Expense $expense, Request $request)
     {
-        //
+		try{
+			$date = new DateTime($expense->date);
+		}catch(\Exception $e){
+			$date = new DateTime();
+		}
+
+		try{
+			$expense->delete();
+
+			$request->session()->flash('status', 'Your expense was deleted successfully!');
+			$request->session()->flash('alert_type', 'alert-success');
+
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}catch(\Exception $e){
+
+			$request->session()->flash('status', 'There was an error deleting your request.  Please try again later.');
+			$request->session()->flash('alert_type', 'alert-danger');
+
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}
+		
     }
 }

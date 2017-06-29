@@ -4,6 +4,39 @@
 
 <div class="row">
 	<div class="col-sm-12">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Delete expense</h4>
+					</div>
+					<div class="modal-body">
+						<p>
+							Are you sure you want to delete the following expense?
+						</p>
+						<p>
+							<b>Expense Type:</b> {{ $expense->expense_type->name }}<br />
+							<b>Description:</b> {{ $expense->description }}<br />
+							<b>Amount:</b> ${{ $expense->amount }}<br />
+							<b>Date:</b> {{ $expense->date }}
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<form action="/expenses/{{ $expense->id }}" method="POST" class="inline">
+							{{ csrf_field() }}
+							{{ method_field('DELETE') }}
+							<button type="submit" class="btn btn-danger">Delete Expense</button>
+						</form>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	<div class="col-sm-12">
 		<h1>Edit expense</h1>
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -17,7 +50,7 @@
 		
 		<form action="/expenses/{{ $expense->id }}" method="POST">
 			{{ csrf_field() }}
-			<input type="hidden" name="_method" value="PUT">
+			{{ method_field('PUT') }}
 			<div class="form-group">
 				<label for="expense_type">Expense Type</label>
 				<select id="expense_type" name="expense_type" class="form-control">
@@ -68,6 +101,9 @@
 				@endif
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+				Delete expense
+			</button>
 		</form>
 	</div> <!-- div.col-sm-12 -->
 </div> <!-- div.row -->
