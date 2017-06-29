@@ -132,7 +132,6 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        //
 		$this->validate($request, [
 			'expense_type' => 'required|exists:expense_types,id',
 			'description' => 'required|min:5',
@@ -151,6 +150,7 @@ class ExpenseController extends Controller
 		$expense->save();
 
 		$request->session()->flash('status', 'Your expense was added successfully!');
+		$request->session()->flash('alert_type', 'alert-success');
 
 		try{
 			$date = new DateTime($request->date);
@@ -181,7 +181,6 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        //
 		$expense_types = ExpenseType::all();
 		
 		return view('expense.edit', compact('expense', 'expense_types'));
@@ -196,7 +195,6 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        //
 		$this->validate($request, [
 			'expense_type' => 'required|exists:expense_types,id',
 			'description' => 'required|min:5',
@@ -212,6 +210,7 @@ class ExpenseController extends Controller
 		$expense->save();
 
 		$request->session()->flash('status', 'Your expense was updated successfully!');
+		$request->session()->flash('alert_type', 'alert-success');
 
 		try{
 			$date = new DateTime($request->date);

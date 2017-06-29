@@ -44,7 +44,7 @@ $(function(){
 
 <div class="row">
 	@if(session('status'))
-		<div class="alert alert-success alert-dismissible text-center" role="alert">
+		<div class="alert {{ session('alert_type') }} alert-dismissible text-center" role="alert">
 			{{ session('status') }}
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
 				<span aria-hidden="true">&times;</span>
