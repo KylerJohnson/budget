@@ -149,6 +149,8 @@ class ExpenseController extends Controller
 
 		$expense->save();
 
+		$request->session()->flash('status', 'Your expense was added successfully!');
+
 		try{
 			$date = new DateTime($request->date);
 			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));

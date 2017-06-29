@@ -36,6 +36,15 @@ plotLineChart($("#historicalSpendingChart"), expense_totals);
 @section('content')
 
 <div class="row">
+	@if(session('status'))
+		<div class="alert alert-success alert-dismissible text-center" role="alert">
+			{{ session('status') }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+	@endif
+	
 	<div class="col-md-4">
 		<b>Spending for {{ $date->format('F Y') }}</b>
 
