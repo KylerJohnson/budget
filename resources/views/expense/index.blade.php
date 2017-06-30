@@ -7,21 +7,9 @@
 <script>
 
 // Initialize variables from server
-
-// Monthly variables
-var current_month_expense_totals = {
-	@foreach($expense_types as $expense_type)
-		"{{ $expense_type->name }}": 0,
-	@endforeach
-};
-
-@foreach($current_month_expenses as $current_month_expense)
-	current_month_expense_totals["{{ $current_month_expense->expense_type->name }}"] += {{ $current_month_expense->amount }};
-@endforeach
+var current_month_expense_totals = {!! json_encode($current_month_expense_totals) !!};
 
 var expense_totals = {!! json_encode($expense_totals) !!};
-
-// Let's run our functions
 
 // Current Month Spending Chart
 plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, "");

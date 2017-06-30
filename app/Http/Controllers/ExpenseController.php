@@ -26,82 +26,13 @@ class ExpenseController extends Controller
 			$date = new DateTime;
 		}
 
-		$expenses = Expense::select(
-			'id',
-			'expense_type_id',
-			'amount',
-			'description',
-			'date',
-			DB::raw('YEAR(date) AS year, MONTH(date) AS month')
-		)->with('expense_type')->get();
+		$current_month_expenses = Expense::yearAndMonth($date)->with('expense_type')->get();
 
-		$current_month_expenses = $expenses->where('year', $date->format('Y'))
-			->where('month', $date->format('m'));
+		$current_month_expense_totals = Expense::expenseTotals($current_month_expenses);
 
-		$expense_types = ExpenseType::get();
+		$expense_totals = Expense::allExpenseTotals();
 
-		// We will generate an array with expense types as the key, and values of arrays with the total, and date.
-		
-		foreach ($expense_types as $expense_type){
-			$expense_totals [$expense_type->name] = []; 
-		}
-
-		// This could be tweaked to show only up to the currently selected
-		// month, but since a user can select a previous month, it makes
-		// sense to show data up to the present.
-		$oldest_expense_date = new DateTime($expenses->min('date'));
-		$newest_expense_date = new DateTime($expenses->max('date'));
-
-		// Loop variables
-		$date_loop = $oldest_expense_date;
-		$litmus = true;
-
-		while($litmus){
-
-			// Get the expenses for the current month with respect
-			// to the loop.
-			$current_month_expenses_loop = 
-				$expenses->where('year', $date_loop->format('Y'))
-					->where('month', $date_loop->format('m'));
-
-			foreach ($expense_totals as $expense_type => $expense_type_array){
-
-				$current_month_expense_loop_sum = 
-					$current_month_expenses_loop->filter(function($value, $key) use ($expense_type){
-							return $value->expense_type->name == $expense_type;
-						})->sum('amount');
-
-				// Arrays of data associated with each expense type.
-				// Each array's entries correspond to data for a
-				// given month.
-				$expense_totals[$expense_type]['amount'][] = $current_month_expense_loop_sum;
-				$expense_totals[$expense_type]['month'][] = $date_loop->format('m');
-				$expense_totals[$expense_type]['year'][] = $date_loop->format('Y');
-				$expense_totals[$expense_type]['displayDate'][] = $date_loop->format('F Y');
-
-			}
-
-			// Iterate 
-
-			// I haven't been able to find any good 'next month' type
-			// functions in either JavaScript or PHP.  The issue with
-			// most is odd day reconciling.  For example, January 31
-			// plus a month would be March 3 or March 2 depending on
-			// leap years.  Since I only care about months and years,
-			// the following seemed to be the simplest
-			
-			$date_loop = new DateTime($date_loop->add(new DateInterval('P1M'))->format('Y-m'));
-
-			if($newest_expense_date->diff($date_loop)->invert == 1){
-				$litmus = true;
-			}elseif($newest_expense_date->diff($date_loop)->days == 0){
-				$litmus = true;
-			}else{
-				$litmus = false;
-			}
-		}
-
-		return view('expense.index', compact('expenses', 'current_month_expenses', 'expense_types', 'date', 'expense_totals'));
+		return view('expense.index', compact('current_month_expenses', 'current_month_expense_totals', 'expense_totals', 'date'));
     }
 
     /**
