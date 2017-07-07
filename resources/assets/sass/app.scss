@@ -1,4 +1,3 @@
-
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
 
@@ -8,10 +7,40 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
-table.clickable td {
-	cursor:pointer;
-}
-
+// Basic Aliases
 .inline {
 	display:inline;
+}
+
+// Page Title
+div.page-title{
+	padding-bottom:20px;
+}
+
+// Chart Legend
+div.chart-legend {
+	margin-bottom:20px;
+}
+
+div.chart-legend span {
+  display:inline-block;
+  width:.8em;
+  height:.8em;
+  margin-right:.5em;
+  margin-left:.5em;
+}
+
+div.chart-legend li {
+  display:inline-block;
+  white-space:pre;
+}
+
+div.chart-legend ul {
+  text-align:center;
+  list-style-type:none;
+}
+
+// Table that can be clicked
+table.clickable td {
+	cursor:pointer;
 }

@@ -12,10 +12,10 @@ var current_month_expense_totals = {!! json_encode($current_month_expense_totals
 var expense_totals = {!! json_encode($expense_totals) !!};
 
 // Current Month Spending Chart
-plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, "");
+var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, {title: "Spending for {{ $date->format('F Y') }}"});
 
 // Historical Spending Chart
-plotLineChart($("#historicalSpendingChart"), expense_totals);
+var historicalSpendingChart = plotLineChart($("#historicalSpendingChart"), expense_totals, {title: "Historical Spending by Month"});
 
 $(function(){
 	$("tr").on("click", function(){
@@ -24,6 +24,8 @@ $(function(){
 	});
 })
 
+$(".chart-legend").html(historicalSpendingChart.generateLegend());
+
 </script>
 
 @endsection
@@ -31,34 +33,46 @@ $(function(){
 @section('content')
 
 <div class="row">
-	@if(session('status'))
-		<div class="alert {{ session('alert_type') }} alert-dismissible text-center" role="alert">
-			{{ session('status') }}
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			</button>
-		</div>
-	@endif
-	
-	<div class="col-md-4">
-		<b>Spending for {{ $date->format('F Y') }}</b>
-
-		<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
-	</div>
-	<div class="col-md-6">
-		<b>Historical Spending by Month</b>
-
-		<canvas id="historicalSpendingChart" width="600" height="400"></canvas>
-	</div>
-	<div class="col-md-12">
-		<div class="panel panel-default">
-			<div class="panel-heading">Expenses for {{ $date->format('F Y') }}</div>
-			<div class="panel-body">
-				<p>
-					The list of our expenses is included in the table below.  There should be some more features to talk about soon!
-				</p>
+	<div class="col-xs-12">
+		@if(session('status'))
+			<div class="alert {{ session('alert_type') }} alert-dismissible text-center" role="alert">
+				{{ session('status') }}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
-			<table class="table table-striped">
+		@endif
+	</div>
+</div>
+	
+<div class="row">
+	<div class="col-xs-12 page-title">
+		<h1>Expenses for {{ $date->format('F Y') }}</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-4">
+		<div class="chart-container" style="position:relative; height:30vh; width:100%">
+			<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
+		</div>
+	</div>
+
+	<div class="col-md-8">
+		<div class="chart-container" style="position:relative; height:40vh; width:100%">
+			<canvas id="historicalSpendingChart" width="600" height="400"></canvas>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 chart-legend">
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-default">
 			<table class="table table-striped clickable">
 				<thead>
 					<tr>
@@ -83,9 +97,8 @@ $(function(){
 					@endif
 				</tbody>
 			</table>
-			<a href="/expenses/create/{{ $date->format('m') }}/{{ $date->format('Y') }}"><button class="btn btn-primary">Add an expense</button></a>
-			<button>Click </button>
 		</div>
-	</div><!-- div.col-md-3 -->
-</div> <!-- div.row -->
+		<a href="/expenses/create/{{ $date->format('m') }}/{{ $date->format('Y') }}"><button class="btn btn-primary">Add an expense</button></a>
+	</div>
+</div>
 @endsection
