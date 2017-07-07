@@ -12,6 +12,14 @@
 				@endif
 			</a>
 		</li>
+		<li {!! $request_parameters[0]== 'analytics' ? 'class="active"':'' !!}>
+			<a href="/analytics">
+				Analytics
+				@if($request_parameters[0] == 'expenses')
+					<span class="sr-only">(current)</span>
+				@endif
+			</a>
+		</li>
 		<li><a href="#">Reports</a></li>
 		<li><a href="#">Export</a></li>
 	</ul>
