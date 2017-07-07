@@ -9,6 +9,8 @@ Homestead.yaml
 .env
 *.sw[a-p]
 gittracking.txt
+ramblings.txt
+
 
 /public/css
 # not generated css
