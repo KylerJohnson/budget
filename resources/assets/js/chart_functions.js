@@ -18,17 +18,17 @@ var background_color_defaults = [
 ];
 
 // A simple wrapper around the Chart.js functionality
-window.plotChart = function (target, chart_type, data_Object, options){
+window.plotChart = function (target, chart_type, data_object, options_object){
 	
 	// target: What element on the page to use
 	// chart_type: bar, line, pie etc.
-	// data_Object: JavaScript object of data labels and points to be 
+	// data_object: JavaScript object of data labels and points to be
 	// graphed
-	// options: other options including 
+	// options_object: other options including
 	//			- labels
 	//			- colors
 	//			- graph specific options
-	//				(Probably want to have option 
+	//				(Probably want to have option
 	//				specific headings?)
 	
 	// Get the canvas using the target option
@@ -37,10 +37,10 @@ window.plotChart = function (target, chart_type, data_Object, options){
 	// We will generate some fields based on the data passed in
 
 	// TODO: create and use a function to generate these
-	var data_labels = Object.keys(data_Object); 
+	var data_labels = Object.keys(data_object);
 	var data_values = [];
 	for (let key of data_labels){
-		data_values.push(data_Object[key]);
+		data_values.push(data_object[key]);
 	}
 	var background_color = background_color_defaults.slice(0,data_labels.length);
 	var hover_background_color = background_color;
@@ -64,25 +64,32 @@ window.plotChart = function (target, chart_type, data_Object, options){
 		},
 		options: {
 			legend: {
+				display: false,
 				position: "right",
 				fullWidth: false,
 				labels: {
 					boxWidth: 10
 				}
+			},
+			maintainAspectRatio:false,
+			title: {
+				display:true,
+				text: options_object.title
 			}
 		}
 	});
+
+	return myChart;
 }
 
-window.plotLineChart = function(target, data_Object, options){
+window.plotLineChart = function(target, data_object, options_object){
 	// Get the canvas using the target option
 	var ctx = target;
 
 	// We will generate some fields based on the data passed in
-	var data_labels = Object.keys(data_Object); 
-	console.log(data_labels);
+	var data_labels = Object.keys(data_object); 
 	var background_colors = background_color_defaults.slice(0,data_labels.length);
-	var labels = data_Object[data_labels[0]]["displayDate"];
+	var labels = data_object[data_labels[0]]["displayDate"];
 	var datasets = [];
 
 	for (let key of data_labels){
@@ -106,7 +113,7 @@ window.plotLineChart = function(target, data_Object, options){
 			pointHoverBorderWidth: 2,
 			pointRadius: 1,
 			pointHitRadius: 10,
-			data: data_Object[key]["amount"],
+			data: data_object[key]["amount"],
 			spanGaps: false,
 		});
 	}
@@ -125,12 +132,29 @@ window.plotLineChart = function(target, data_Object, options){
 				}]
 			},
 			legend: {
-				position: "right",
+				display:false,
+				position: "bottom",
 				fullWidth: false,
 				labels: {
 					boxWidth: 10
 				}
+			},
+			maintainAspectRatio: false,
+			title: {
+				display:true,
+				text: options_object.title
+			},
+			scales: {
+				yAxes:[{
+					ticks: {
+						callback: function(value, index, values){
+							return "$"+value;
+						}
+					}
+				}]
 			}
 		}
 	});
+
+	return myLineChart;
 }
