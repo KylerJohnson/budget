@@ -11,6 +11,9 @@
 .inline {
 	display:inline;
 }
+.display-none {
+	display:none;
+}
 
 // Page Title
 div.page-title{
@@ -43,4 +46,9 @@ div.chart-legend ul {
 // Table that can be clicked
 table.clickable td {
 	cursor:pointer;
+}
+
+// Fieldset Legend
+legend {
+	margin-bottom:0px;
 }
