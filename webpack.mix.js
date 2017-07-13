@@ -18,4 +18,5 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.js('resources/assets/js/app.js', 'public/js')
 	.js('resources/assets/js/chart_functions.js', 'public/js/chart_functions.js')
+	.js('resources/assets/js/form_functions.js', 'public/js/form_functions.js')
    .sass('resources/assets/sass/app.scss', 'public/css');
