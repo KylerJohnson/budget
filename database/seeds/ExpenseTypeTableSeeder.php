@@ -19,58 +19,59 @@ class ExpenseTypeTableSeeder extends Seeder
 
 		App\ExpenseType::create([
 			'name' => 'Food',
-			'month_budget' => 300.00
+			'monthly_budget' => 300.00
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Clothing',
-			'month_budget' => 200.00
+			'monthly_budget' => 200.00
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Entertainment',
-			'month_budget' => 250.00
+			'monthly_budget' => 250.00
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Alcohol',
-			'month_budget' => '150.00'
+			'monthly_budget' => '150.00'
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Mortgage',
-			'month_amount' => '1000',
-			'is_recurring' => true
+			'monthly_amount' => '1000',
+			'recurring_expense' => true,
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Car Payment',
-			'month_amount' => 200.00,
-			'is_recurring' => true,
+			'monthly_amount' => 200.00,
+			'recurring_expense' => true,
+			'set_recurring_end_date' => true,
 			'recurring_end_date' => '2020-01-01'
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Utilities',
-			'month_amount' => '300.00',
-			'is_recurring' => true
+			'monthly_amount' => '300.00',
+			'recurring_expense' => true
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Investments',
-			'month_amount' => 100.00,
-			'is_recurring' => true
+			'monthly_amount' => 100.00,
+			'recurring_expense' => true
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Taxes',
-			'month_amount' => '100.00',
-			'is_recurring' => true
+			'monthly_amount' => '100.00',
+			'recurring_expense' => true
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Miscellaneous',
-			'month_budget' => 200.00
+			'monthly_budget' => 200.00
 		]);
 
     }
