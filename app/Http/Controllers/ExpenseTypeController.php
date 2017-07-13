@@ -42,7 +42,7 @@ class ExpenseTypeController extends Controller
      */
     public function store(Request $request)
     {
-		$expense_types = ExpenseType::select('name')->get();
+		$next_month = new DateTime((new DateTime())->add(new DateInterval('P1M'))->format('Y-m'));
 
 		$validator = Validator::make($request->all(), [
 			'expense_type' => ['required','regex:/^(\w+\s)*+\w+$/', 'min:3', 'unique:expense_types,name'],
@@ -61,8 +61,8 @@ class ExpenseTypeController extends Controller
 			return $data->recurring_expense === "1";
 		});
 
-		$validator->sometimes('recurring_end_date', 'date', function($data){
-			return $data->set_recurring_end === "1";
+		$validator->sometimes('recurring_end_date', 'date|after_or_equal:'.$next_month->format('F jS'), function($data){
+			return $data->set_recurring_end_date === "1";
 		});
 
 		if ($validator->fails()) {
@@ -74,9 +74,10 @@ class ExpenseTypeController extends Controller
 		$expense_type = new ExpenseType;
 
 		$expense_type->name = $request->expense_type;
-		$expense_type->month_budget = $request->monthly_budget;
-		$expense_type->month_amount = $request->monthly_amount;
-		$expense_type->is_recurring = $request->recurring_expense;
+		$expense_type->monthly_budget = $request->monthly_budget;
+		$expense_type->monthly_amount = $request->monthly_amount;
+		$expense_type->recurring_expense = $request->recurring_expense;
+		$expense_type->set_recurring_end_date = $request->set_recurring_end_date;
 		$expense_type->recurring_end_date = $request->recurring_end_date;
 
 

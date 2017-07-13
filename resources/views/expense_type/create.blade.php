@@ -52,7 +52,7 @@
 					</label>
 				</div>
 			</fieldset>
-			<div id="recurring_expense_hide" class="{{ old('recurring_expense') === "1" ? "" : "display-none" }}">
+			<div class="recurring_expense_hide {{ old('recurring_expense') === "1" ? "" : "display-none" }}">
 				<div class="form-group">
 					<label for="monthly-amount">Monthly Amount</label>
 					<div class="input-group">
@@ -75,7 +75,7 @@
 						</label>
 					</div>
 				</fieldset>
-				<div id="set_recurring_end_hide" class="{{ old('set_recurring_end_date') === "1" ? "" : "display-none" }}">
+				<div class="set_recurring_end_hide {{ old('set_recurring_end_date') === "1" ? "" : "display-none" }}">
 					<div class="form-group">
 						<label for="recurring-end-date">Recurring End Date</label>
 						<input type="date" id="recurring-end-date" name="recurring_end_date" class="form-control" value="{{ old('recurring_end_date') }}">
