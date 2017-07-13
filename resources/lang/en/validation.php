@@ -98,8 +98,14 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'monthly_amount' => [
+            'required_if' => 'The monthly amount field is required when the expense is recurring.',
+        ],
+        'set_recurring_end_date' => [
+            'required_if' => 'You must indicate if you would like to set an end date for the recurring expense.',
+        ],
+        'recurring_end_date' => [
+            'required_if' => 'The recurring end date is required.',
         ],
     ],
 

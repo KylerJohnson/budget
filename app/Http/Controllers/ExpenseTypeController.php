@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ExpenseType;
+use App\Expense;
 use Illuminate\Http\Request;
+use Validator;
 
 class ExpenseTypeController extends Controller
 {
@@ -27,7 +29,7 @@ class ExpenseTypeController extends Controller
      */
     public function create()
     {
-        //
+		return view('expense_type.create');
     }
 
     /**
@@ -38,7 +40,61 @@ class ExpenseTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$expense_types = ExpenseType::select('name')->get();
+
+		$validator = Validator::make($request->all(), [
+			'expense_type' => ['required','regex:/^(\w+\s)*+\w+$/', 'min:3', 'unique:expense_types,name'],
+			'monthly_budget' => 'nullable|numeric',
+			'recurring_expense' => 'required|boolean',
+			'monthly_amount' => 'required_if:recurring_expense,1',
+			'set_recurring_end_date' => 'required_if:recurring_expense,1',
+			'recurring_end_date' => 'required_if:set_recurring_end_date,1'
+		]);
+
+		$validator->sometimes('monthly_amount', 'numeric', function($data){
+			return $data->recurring_expense === "1";
+		});
+
+		$validator->sometimes('set_recurring_end_date', 'boolean', function($data){
+			return $data->recurring_expense === "1";
+		});
+
+		$validator->sometimes('recurring_end_date', 'date', function($data){
+			return $data->set_recurring_end === "1";
+		});
+
+		if ($validator->fails()) {
+			return back()
+				->withErrors($validator)
+				->withInput();
+		}
+
+		$expense_type = new ExpenseType;
+
+		$expense_type->name = $request->expense_type;
+		$expense_type->month_budget = $request->monthly_budget;
+		$expense_type->month_amount = $request->monthly_amount;
+		$expense_type->is_recurring = $request->recurring_expense;
+		$expense_type->recurring_end_date = $request->recurring_end_date;
+
+
+		$expense_type->save();
+
+		if($request->start_now === "true"){
+			$expense = new Expense;
+
+			$expense->expense_type_id = $expense_type->id;
+			$expense->amount = $expense_type->month_amount;
+			$expense->description = "Monthly "+$expense_type->name+" expense.";
+			$expense->date = date('Y-m-d H:i:s');
+
+			$expense->save();
+		}
+
+		$request->session()->flash('status', 'Your expense type was added successfully!');
+		$request->session()->flash('alert_type', 'alert-success');
+
+		return redirect('expense_management');
     }
 
     /**
