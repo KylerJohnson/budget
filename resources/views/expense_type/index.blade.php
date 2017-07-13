@@ -47,15 +47,15 @@
 				<tbody>
 					@if (count($expense_types)>0)
 						@foreach ($expense_types as $expense_type)
-							<tr data-expenseId="{{ $expense_type->id }}">
+							<tr data-expense_type_id="{{ $expense_type->id }}">
 								<td>{{ $expense_type->name }}</td>
-								<td>{{ $expense_type->month_budget }}</td>
-								<td>{{ $expense_type->is_recurring ? "Yes" : "No"}}</td>
-								<td>{{ $expense_type->is_recurring? $expense_type->month_amount : "" }}</td>
+								<td>{{ $expense_type->monthly_budget }}</td>
+								<td>{{ $expense_type->recurring_expense ? "Yes" : "No"}}</td>
+								<td>{{ $expense_type->recurring_expense? $expense_type->monthly_amount : "" }}</td>
 								<td>
-									@if($expense_type->is_recurring && (new DateTime($expense_type->recurring_end_date))->format('Y')>1970 )
+									@if($expense_type->recurring_expense && $expense_type->set_recurring_end_date)
 										{{ (new DateTime($expense_type->recurring_end_date))->format('F j, Y') }}
-									@elseif($expense_type->is_recurring)
+									@elseif($expense_type->recurring_expense)
 										Indefinite Expense
 									@endif
 								</td>
