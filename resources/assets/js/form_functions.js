@@ -1,3 +1,7 @@
 $("input[type=radio]").on("change", function(){
-	$("#"+$(this).attr("data-toggle_target")).toggleClass("display-none");
+	if($(this).val() == "1"){
+		$("."+$(this).attr("data-toggle_target")).removeClass("display-none");
+	}else{
+		$("."+$(this).attr("data-toggle_target")).addClass("display-none");
+	}
 });
