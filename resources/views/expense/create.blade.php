@@ -3,23 +3,26 @@
 @section('content')
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 page-title">
 		<h1>Add a new expense</h1>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
-		
+	</div>
+
+	<div class="col-xs-12">
+		@if ($errors->any())
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
+
 		<form action="/expenses" method="POST">
 			{{ csrf_field() }}
 			<div class="form-group">
-				<label for="expense_type">Expense Type</label>
-				<select id="expense_type" name="expense_type" class="form-control">
+				<label for="expense-type">Expense Type</label>
+				<select id="expense-type" name="expense_type" class="form-control">
 					<option value="">Select One</option>
 					@foreach($expense_types as $expense_type)
 						<option 
