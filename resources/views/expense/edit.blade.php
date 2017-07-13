@@ -15,13 +15,7 @@
 					</div>
 					<div class="modal-body">
 						<p>
-							Are you sure you want to delete the following expense?
-						</p>
-						<p>
-							<b>Expense Type:</b> {{ $expense->expense_type->name }}<br />
-							<b>Description:</b> {{ $expense->description }}<br />
-							<b>Amount:</b> ${{ $expense->amount }}<br />
-							<b>Date:</b> {{ $expense->date }}
+							Are you sure you want to delete this expense?
 						</p>
 					</div>
 					<div class="modal-footer">
