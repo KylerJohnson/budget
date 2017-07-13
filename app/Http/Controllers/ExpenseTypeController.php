@@ -6,6 +6,8 @@ use App\ExpenseType;
 use App\Expense;
 use Illuminate\Http\Request;
 use Validator;
+use DateTime;
+use DateInterval;
 
 class ExpenseTypeController extends Controller
 {
@@ -114,9 +116,10 @@ class ExpenseTypeController extends Controller
      * @param  \App\ExpenseType  $expenseType
      * @return \Illuminate\Http\Response
      */
-    public function edit(ExpenseType $expenseType)
+    public function edit(ExpenseType $expense_management)
     {
-        //
+		$expense_type = $expense_management;
+		return view('expense_type.edit', compact('expense_type'));
     }
 
     /**
@@ -126,9 +129,57 @@ class ExpenseTypeController extends Controller
      * @param  \App\ExpenseType  $expenseType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpenseType $expenseType)
+    public function update(Request $request, ExpenseType $expense_management)
     {
-        //
+		$next_month = new DateTime((new DateTime())->add(new DateInterval('P1M'))->format('Y-m'));
+
+		$expense_type = $expense_management;
+
+		$validator = Validator::make($request->all(), [
+			'expense_type' => ['required','regex:/^(\w+\s)*+\w+$/', 'min:3'],
+			'monthly_budget' => 'nullable|numeric',
+			'recurring_expense' => 'required|boolean',
+			'monthly_amount' => 'required_if:recurring_expense,1',
+			'set_recurring_end_date' => 'required_if:recurring_expense,1',
+			'recurring_end_date' => 'required_if:set_recurring_end_date,1'
+		]);
+
+		$validator->sometimes('expense_type', 'unique:expense_types,name', function($data) use ($expense_type){
+			return $data->expense_type != $expense_type->name;
+		});
+
+		$validator->sometimes('monthly_amount', 'numeric', function($data){
+			return $data->recurring_expense === "1";
+		});
+
+		$validator->sometimes('set_recurring_end_date', 'boolean', function($data){
+			return $data->recurring_expense === "1";
+		});
+
+		$validator->sometimes('recurring_end_date', 'date|after_or_equal:'.$next_month->format('F jS'), function($data){
+			return $data->set_recurring_end_date === "1";
+		});
+
+		if ($validator->fails()) {
+			return back()
+				->withErrors($validator)
+				->withInput();
+		}
+
+		$expense_type->name = $request->expense_type;
+		$expense_type->monthly_budget = $request->monthly_budget;
+		$expense_type->monthly_amount = $request->monthly_amount;
+		$expense_type->recurring_expense = $request->recurring_expense;
+		$expense_type->set_recurring_end_date = $request->set_recurring_end_date;
+		$expense_type->recurring_end_date = $request->recurring_end_date;
+
+
+		$expense_type->save();
+
+		$request->session()->flash('status', 'Your expense type was updated successfully!');
+		$request->session()->flash('alert_type', 'alert-success');
+
+		return redirect('expense_management');
     }
 
     /**
@@ -137,8 +188,15 @@ class ExpenseTypeController extends Controller
      * @param  \App\ExpenseType  $expenseType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpenseType $expenseType)
+    public function destroy(ExpenseType $expense_management, Request $request)
     {
-        //
+		$expense_type = $expense_management;
+
+		$expense_type->delete();
+
+		$request->session()->flash('status', 'Your expense type was updated successfully!');
+		$request->session()->flash('alert_type', 'alert-danger');
+
+		return redirect('expense_management');
     }
 }

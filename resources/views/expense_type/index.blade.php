@@ -2,6 +2,17 @@
 
 @section('scripts')
 
+<script>
+
+$(function(){
+	$("tr").on("click", function(){
+		console.log($(this).attr("data-expense_type_id"));
+		window.location = "/expense_management/"+$(this).attr("data-expense_type_id")+"/edit";
+	});
+})
+
+</script>
+
 @endsection
 
 @section('content')
