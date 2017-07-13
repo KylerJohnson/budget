@@ -31,6 +31,6 @@ Route::get('expenses/create/{month}/{year}', 'ExpenseController@create');
 
 Route::resource('expenses', 'ExpenseController');
 
-Route::resource('expense_types', 'ExpenseTypeController');
+Route::resource('expense_management', 'ExpenseTypeController');
 
 Route::get('analytics', 'AnalyticsController@index');

@@ -20,20 +20,14 @@
 				@endif
 			</a>
 		</li>
-		<li><a href="#">Reports</a></li>
-		<li><a href="#">Export</a></li>
-	</ul>
-	<ul class="nav nav-sidebar">
-		<li><a href="">Nav item</a></li>
-		<li><a href="">Nav item again</a></li>
-		<li><a href="">One more nav</a></li>
-		<li><a href="">Another nav item</a></li>
-		<li><a href="">More navigation</a></li>
-	</ul>
-	<ul class="nav nav-sidebar">
-		<li><a href="">Nav item again</a></li>
-		<li><a href="">One more nav</a></li>
-		<li><a href="">Another nav item</a></li>
+		<li {!! $request_parameters[0]== 'expense_management' ? 'class="active"':'' !!}>
+			<a href="/expense_management">
+				Expense Management
+				@if($request_parameters[0] == 'expenses')
+					<span class="sr-only">(current)</span>
+				@endif
+			</a>
+		</li>
 	</ul>
 </div>
 

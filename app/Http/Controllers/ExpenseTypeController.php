@@ -14,6 +14,9 @@ class ExpenseTypeController extends Controller
      */
     public function index()
     {
+		$expense_types = ExpenseType::orderBy('name')->get();
+
+		return view('expense_type.index', compact('expense_types'));
         //
     }
 
