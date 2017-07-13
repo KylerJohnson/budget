@@ -18,7 +18,7 @@ class ExpenseTableSeeder extends Seeder
 		DB::table('expenses')->truncate();
 
 		// general expenses
-		factory(App\Expense::class, 150)->create();
+		factory(App\Expense::class, 800)->create();
 
     }
 }
