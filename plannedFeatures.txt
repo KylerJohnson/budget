@@ -3,8 +3,8 @@ Topic: Add a credit class that will track available funds much like
 
 Tasks:
 Status		Task
-Pending		Migration
-Pending		Seeding
+Finished	Migration
+Finished	Seeding
 Pending		Index/Overview
 Pending		Create
 Pending		Edit/Delete
@@ -34,3 +34,4 @@ Pending		Make tables sortable
 Pending		Add more colors for graphs
 Pending		Allow user to specify number of months for historical
 				spending graph.
+Pending		Implement monthly expense adds (Lavavel job or something)
