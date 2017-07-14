@@ -58,6 +58,8 @@ class IncomeController extends Controller
     public function edit(Income $income)
     {
         //
+		echo "Income Edit";
+		dd($income);
     }
 
     /**
