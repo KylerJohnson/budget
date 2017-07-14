@@ -5,9 +5,8 @@
 <script>
 
 $(function(){
-	$("tr").on("click", function(){
-		console.log($(this).attr("data-expense_type_id"));
-		window.location = "/expense_management/"+$(this).attr("data-expense_type_id")+"/edit";
+	$(".clickable td").on("click", function(){
+		window.location = "/expense_management/"+$(this).parent().attr("data-expense_type_id")+"/edit";
 	});
 })
 

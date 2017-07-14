@@ -13,9 +13,8 @@ var current_month_expense_totals = {!! json_encode($current_month_expense_totals
 var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, {title: "Spending for {{ $date->format('F Y') }}"});
 
 $(function(){
-	$("tr").on("click", function(){
-		console.log($(this).attr("data-expenseId"));
-		window.location = "/expenses/"+$(this).attr("data-expenseId")+"/edit";
+	$(".clickable td").on("click", function(){
+		window.location = "/expenses/"+$(this).parent().attr("data-expenseId")+"/edit";
 	});
 })
 
