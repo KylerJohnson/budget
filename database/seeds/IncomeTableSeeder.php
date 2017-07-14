@@ -17,7 +17,7 @@ class IncomeTableSeeder extends Seeder
 
 		DB::table('income')->truncate();
 
-		factory(Income::class, 800)->create();
+		factory(Income::class, 100)->create();
 
     }
 }

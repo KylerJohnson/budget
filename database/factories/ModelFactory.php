@@ -34,8 +34,8 @@ $factory->define(App\Expense::class, function(Faker\Generator $faker) {
 
 $factory->define(App\Income::class, function(Faker\Generator $faker) {
 	return [
-		'description' => "Income",
-		'amount' => $faker->numberBetween(5, 300),
+		'description' => "Emplyoment Income",
+		'amount' => $faker->numberBetween(200, 600),
 		'date' => $faker->dateTimeThisYear()
 	];
 });
