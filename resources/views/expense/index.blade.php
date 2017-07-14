@@ -72,7 +72,7 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 	</div>
 
 	<div class="col-md-4">
-		<div class="chart-container" style="position:relative; height:30vh; width:100%">
+		<div class="chart-container" style="position:relative; height:35vh; width:100%">
 			<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
 		</div>
 	</div>

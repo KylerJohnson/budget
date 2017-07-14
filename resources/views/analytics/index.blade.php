@@ -17,12 +17,6 @@ var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie"
 // Historical Spending Chart
 var historicalSpendingChart = plotLineChart($("#historicalSpendingChart"), expense_totals, {title: "Historical Spending by Month"});
 
-$(function(){
-	$("tr").on("click", function(){
-		window.location = "/expenses/"+$(this).attr("data-expenseId")+"/edit";
-	});
-})
-
 $(".chart-legend").html(historicalSpendingChart.generateLegend());
 
 </script>
@@ -38,13 +32,13 @@ $(".chart-legend").html(historicalSpendingChart.generateLegend());
 </div>
 
 <div class="row">
-	<div class="col-md-4">
-		<div class="chart-container" style="position:relative; height:30vh; width:100%">
+	<div class="col-md-3">
+		<div class="chart-container" style="position:relative; height:35vh; width:100%">
 			<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
 		</div>
 	</div>
 
-	<div class="col-md-8">
+	<div class="col-md-9">
 		<div class="chart-container" style="position:relative; height:40vh; width:100%">
 			<canvas id="historicalSpendingChart" width="600" height="400"></canvas>
 		</div>
