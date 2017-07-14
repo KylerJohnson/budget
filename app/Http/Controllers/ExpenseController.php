@@ -30,9 +30,9 @@ class ExpenseController extends Controller
 
 		$current_month_expense_totals = Expense::expenseTotals($current_month_expenses);
 
-		$expense_totals = Expense::allExpenseTotals();
+		$expense_types = ExpenseType::orderBy('name')->get();
 
-		return view('expense.index', compact('current_month_expenses', 'current_month_expense_totals', 'expense_totals', 'date'));
+		return view('expense.index', compact('current_month_expenses', 'current_month_expense_totals', 'expense_types', 'date'));
     }
 
     /**

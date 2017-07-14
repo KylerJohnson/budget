@@ -9,13 +9,8 @@
 // Initialize variables from server
 var current_month_expense_totals = {!! json_encode($current_month_expense_totals) !!};
 
-var expense_totals = {!! json_encode($expense_totals) !!};
-
 // Current Month Spending Chart
 var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, {title: "Spending for {{ $date->format('F Y') }}"});
-
-// Historical Spending Chart
-var historicalSpendingChart = plotLineChart($("#historicalSpendingChart"), expense_totals, {title: "Historical Spending by Month"});
 
 $(function(){
 	$("tr").on("click", function(){
@@ -24,7 +19,7 @@ $(function(){
 	});
 })
 
-$(".chart-legend").html(historicalSpendingChart.generateLegend());
+$(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 
 </script>
 
@@ -52,15 +47,34 @@ $(".chart-legend").html(historicalSpendingChart.generateLegend());
 </div>
 
 <div class="row">
+	<div class="col-md-8">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Expense</th>
+					<th class="text-right">Spending to date</th>
+					<th class="text-right">Monthly Budget</th>
+					<th class="text-right">Available Spending</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($expense_types as $expense_type)
+					@if($expense_type->monthly_budget > 0)
+					<tr>
+						<td>{{ $expense_type->name }}</td>
+						<td class="text-right">{{ number_format($current_month_expense_totals[$expense_type->name], '2', '.', '') }}</td>
+						<td class="text-right">{{ $expense_type->monthly_budget }}</td>
+						<td class="text-right">{{ number_format($expense_type->monthly_budget-$current_month_expense_totals[$expense_type->name], '2', '.', '') }}</td>
+					</tr>
+					@endif
+				@endforeach
+			</tbody>
+		</table>
+	</div>
+
 	<div class="col-md-4">
 		<div class="chart-container" style="position:relative; height:30vh; width:100%">
 			<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
-		</div>
-	</div>
-
-	<div class="col-md-8">
-		<div class="chart-container" style="position:relative; height:40vh; width:100%">
-			<canvas id="historicalSpendingChart" width="600" height="400"></canvas>
 		</div>
 	</div>
 </div>
