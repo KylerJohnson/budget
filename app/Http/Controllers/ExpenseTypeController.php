@@ -193,11 +193,18 @@ class ExpenseTypeController extends Controller
     {
 		$expense_type = $expense_management;
 
-		$expense_type->delete();
+		try{
+			$expense_type->delete();
 
-		$request->session()->flash('status', 'Your expense type was updated successfully!');
-		$request->session()->flash('alert_type', 'alert-danger');
+			$request->session()->flash('status', 'Your expense type was updated successfully!');
+			$request->session()->flash('alert_type', 'alert-danger');
 
-		return redirect('expense_management');
+			return redirect('expense_management');
+		}catch(\Exception $e){
+			$request->session()->flash('status', 'There was an error deleting your request.  Please try again later.');
+			$request->session()->flash('alert_type', 'alert-danger');
+
+			return redirect('expense_management');
+		}
     }
 }
