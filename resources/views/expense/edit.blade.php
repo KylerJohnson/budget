@@ -91,11 +91,12 @@
 			</div>
 			<div class="form-group">
 				<label for="date">Date</label>
-				@if(old('date'))
-					<input type="date" id="date" name="date" class="form-control" value="{{ old('date') }}">
-				@else
-					<input type="date" id="date" name="date" class="form-control" value="{{ $expense->date }}">
-				@endif
+					<input type="date" id="date" name="date" class="form-control"
+						@if(old('date'))
+							value="{{ old('date') }}">
+						@else
+							value="{{ $expense->date }}">
+						@endif
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
