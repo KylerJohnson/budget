@@ -26,21 +26,24 @@
 							<button type="submit" class="btn btn-danger">Delete Expense</button>
 						</form>
 					</div>
-					</div>
 				</div>
 			</div>
 		</div>
-	<div class="col-sm-12">
+	</div>
+	<div class="col-sm-12 page-title">
 		<h1>Edit expense</h1>
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+	</div>
+
+	<div class="col-xs-12">
+		@if ($errors->any())
+			<div class="alert alert-danger">
+				<ul>
+					@foreach ($errors->all() as $error)
+						<li>{{ $error }}</li>
+					@endforeach
+				</ul>
+			</div>
+		@endif
 		
 		<form action="/expenses/{{ $expense->id }}" method="POST">
 			{{ csrf_field() }}
@@ -88,11 +91,12 @@
 			</div>
 			<div class="form-group">
 				<label for="date">Date</label>
-				@if(old('date'))
-					<input type="date" id="date" name="date" class="form-control" value="{{ old('date') }}">
-				@else
-					<input type="date" id="date" name="date" class="form-control" value="{{ $expense->date }}">
-				@endif
+					<input type="date" id="date" name="date" class="form-control"
+						@if(old('date'))
+							value="{{ old('date') }}">
+						@else
+							value="{{ $expense->date }}">
+						@endif
 			</div>
 			<button type="submit" class="btn btn-primary">Submit</button>
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
