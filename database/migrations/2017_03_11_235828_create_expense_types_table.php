@@ -16,7 +16,7 @@ class CreateExpenseTypesTable extends Migration
 		Schema::create('expense_types', function (Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
-			$table->decimal('monthly_budget', 6, 2);
+			$table->decimal('monthly_budget', 6, 2)->nullable();
 			$table->boolean('recurring_expense');
 			$table->decimal('monthly_amount', 6, 2)->nullable();
 			$table->boolean('set_recurring_end_date')->nullable();
