@@ -6,7 +6,7 @@ Status		Task
 Finished	Migration
 Finished	Seeding
 Finished	Index/Overview
-Pending		Create
+Finished	Create
 Pending		Edit/Delete
 Pending		Incorporate available funds into monthly pie chart
 Pending		Incorporate available funds into overview

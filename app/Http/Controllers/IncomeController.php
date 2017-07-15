@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Income;
 use Illuminate\Http\Request;
+use DateTime;
 
 class IncomeController extends Controller
 {
@@ -22,10 +23,17 @@ class IncomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($month = null, $year = null)
     {
-        //
-		echo "Income Create";
+		// Try and build a date from the request parameters.
+		// If it fails, default to the current date.
+		try{
+			$date = new DateTime($year.'-'.$month);
+		}catch (\Exception $e){
+			$date = new DateTime;
+		}
+
+		return view('income.create', compact('date'));
     }
 
     /**
@@ -36,7 +44,31 @@ class IncomeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$this->validate($request, [
+			'description' => 'required|min:5',
+			'amount' => 'required|numeric',
+			'date' => 'required|date'
+		]);
+		echo 'store';
+
+		$income = new Income;
+
+		$income->description = $request->description;
+		$income->amount = $request->amount;
+		$income->date = $request->date;
+
+		$income->save();
+
+		$request->session()->flash('status', 'Your income entry was added successfully!');
+		$request->session()->flash('alert_type', 'alert-success');
+
+		try{
+			$date = new DateTime($request->date);
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}catch(\Exception $e){
+			return redirect('expenses');
+		}
+
     }
 
     /**
