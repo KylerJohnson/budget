@@ -29,6 +29,6 @@ class CreateIncomeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('incomes');
+        Schema::dropIfExists('income');
     }
 }
