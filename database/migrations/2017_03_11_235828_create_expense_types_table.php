@@ -18,9 +18,9 @@ class CreateExpenseTypesTable extends Migration
 			$table->string('name');
 			$table->decimal('monthly_budget', 6, 2);
 			$table->boolean('recurring_expense');
-			$table->decimal('monthly_amount', 6, 2);
-			$table->boolean('set_recurring_end_date');
-			$table->date('recurring_end_date');
+			$table->decimal('monthly_amount', 6, 2)->nullable();
+			$table->boolean('set_recurring_end_date')->nullable();
+			$table->date('recurring_end_date')->nullable();
 			$table->timestamps();
 		});
 	}
