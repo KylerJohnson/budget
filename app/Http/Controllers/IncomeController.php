@@ -49,7 +49,6 @@ class IncomeController extends Controller
 			'amount' => 'required|numeric',
 			'date' => 'required|date'
 		]);
-		echo 'store';
 
 		$income = new Income;
 
@@ -91,8 +90,7 @@ class IncomeController extends Controller
     public function edit(Income $income)
     {
         //
-		echo "Income Edit";
-		dd($income);
+		return view('income.edit', compact('income'));
     }
 
     /**
@@ -104,7 +102,27 @@ class IncomeController extends Controller
      */
     public function update(Request $request, Income $income)
     {
-        //
+		$this->validate($request, [
+			'description' => 'required|min:5',
+			'amount' => 'required|numeric',
+			'date' => 'required|date'
+		]);
+
+		$income->description = $request->description;
+		$income->amount = $request->amount;
+		$income->date = $request->date;
+
+		$income->save();
+
+		$request->session()->flash('status', 'Your income entry was updated successfully!');
+		$request->session()->flash('alert_type', 'alert-success');
+
+		try{
+			$date = new DateTime($request->date);
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}catch(\Exception $e){
+			return redirect('expenses');
+		}
     }
 
     /**
@@ -113,8 +131,27 @@ class IncomeController extends Controller
      * @param  \App\Income  $income
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Income $income)
+    public function destroy(Income $income, Request $request)
     {
-        //
+		try{
+			$date = new DateTime($income->date);
+		}catch(\Exception $e){
+			$date = new DateTime();
+		}
+
+		try{
+			$income->delete();
+
+			$request->session()->flash('status', 'Your income was deleted successfully!');
+			$request->session()->flash('alert_type', 'alert-success');
+
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}catch(\Exception $e){
+
+			$request->session()->flash('status', 'There was an error deleting your request.  Please try again later.');
+			$request->session()->flash('alert_type', 'alert-danger');
+
+			return redirect('expenses/'.$date->format('m').'/'.$date->format('Y'));
+		}
     }
 }

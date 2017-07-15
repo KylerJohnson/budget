@@ -7,7 +7,7 @@ Finished	Migration
 Finished	Seeding
 Finished	Index/Overview
 Finished	Create
-Pending		Edit/Delete
+Finished	Edit/Delete
 Pending		Incorporate available funds into monthly pie chart
 Pending		Incorporate available funds into overview
 Pending		Incorporate into analytics
