@@ -22,6 +22,8 @@ Route::get('expenses/{expense}/edit', 'ExpenseController@edit');
 Route::get('expenses/{month}/{year}', 'ExpenseController@index');
 Route::get('expenses/create/{month}/{year}', 'ExpenseController@create');
 
+Route::get('income/create/{month}/{year}', 'IncomeController@create');
+
 /*function($month, $year){
 	return redirect()->action(
 		'ExpenseController@index', ['month'=>$month, 'year'=>$year]

@@ -25,6 +25,7 @@ class IncomeController extends Controller
     public function create()
     {
         //
+		echo "Income Create";
     }
 
     /**

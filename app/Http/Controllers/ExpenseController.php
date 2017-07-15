@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Expense;
 use App\ExpenseType;
+use App\Income;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -18,6 +19,9 @@ class ExpenseController extends Controller
      */
     public function index($month = null, $year = null)
     {
+		// Should really refactor out into some sort of dashboard.
+		// Especially with the income stuff.
+
 		// Try and build a date from the request parameters.
 		// If it fails, default to the current date.
 		try{
@@ -26,13 +30,20 @@ class ExpenseController extends Controller
 			$date = new DateTime;
 		}
 
+		// For the table of expenses.
 		$current_month_expenses = Expense::yearAndMonth($date)->with('expense_type')->get();
 
+		// For the pie chart of expense totals.
+		// Doesn't rely on external expense types being passed.
 		$current_month_expense_totals = Expense::expenseTotals($current_month_expenses);
 
+		// For the table detailing the spending targets.
 		$expense_types = ExpenseType::orderBy('name')->get();
 
-		return view('expense.index', compact('current_month_expenses', 'current_month_expense_totals', 'expense_types', 'date'));
+		// For the table of income.
+		$current_month_income = Income::yearAndMonth($date)->get();
+
+		return view('expense.index', compact('current_month_expenses', 'current_month_income', 'current_month_expense_totals', 'expense_types', 'date'));
     }
 
     /**
