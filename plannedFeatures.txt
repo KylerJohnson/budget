@@ -31,6 +31,6 @@ Pending		Implement in Analytics
 Miscellaneous:
 Status		Task
 Pending		Make tables sortable
-Pending		Add more colors for graphs
+Finished	Add more colors for graphs
 Pending		Allow user to specify number of months for historical
 				spending graph.
