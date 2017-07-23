@@ -8,7 +8,7 @@ Finished	Seeding
 Finished	Index/Overview
 Finished	Create
 Finished	Edit/Delete
-Pending		Incorporate available funds into monthly pie chart
+Finished	Incorporate available funds into monthly pie chart
 Pending		Incorporate available funds into overview
 Pending		Incorporate into analytics
 
@@ -35,3 +35,4 @@ Pending		Add more colors for graphs
 Pending		Allow user to specify number of months for historical
 				spending graph.
 Pending		Implement monthly expense adds (Lavavel job or something)
+Pending		Add ajax page for chart data (protects against xss)

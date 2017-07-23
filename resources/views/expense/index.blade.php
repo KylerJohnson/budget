@@ -9,6 +9,8 @@
 // Initialize variables from server
 var current_month_expense_totals = {!! json_encode($current_month_expense_totals) !!};
 
+current_month_expense_totals['Available Funds'] = {{ $current_month_available_funds }};
+
 // Current Month Spending Chart
 var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, {title: "Spending for {{ $date->format('F Y') }}"});
 

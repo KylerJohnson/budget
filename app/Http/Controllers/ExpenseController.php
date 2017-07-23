@@ -37,13 +37,20 @@ class ExpenseController extends Controller
 		// Doesn't rely on external expense types being passed.
 		$current_month_expense_totals = Expense::expenseTotals($current_month_expenses);
 
+		$current_month_expense_total = Expense::yearAndMonth($date)->sum('amount');
+		$current_month_income_total = Income::yearAndMonth($date)->sum('amount');
+		$current_month_available_funds = $current_month_income_total - $current_month_expense_total;
+		if($current_month_available_funds < 0){
+			$current_month_available_funds = 0;
+		}
+
 		// For the table detailing the spending targets.
 		$expense_types = ExpenseType::orderBy('name')->get();
 
 		// For the table of income.
 		$current_month_income = Income::yearAndMonth($date)->get();
 
-		return view('expense.index', compact('current_month_expenses', 'current_month_income', 'current_month_expense_totals', 'expense_types', 'date'));
+		return view('expense.index', compact('current_month_expenses', 'current_month_income', 'current_month_expense_totals', 'current_month_available_funds', 'expense_types', 'date'));
     }
 
     /**
