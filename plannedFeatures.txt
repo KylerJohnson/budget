@@ -22,7 +22,7 @@ Tasks:
 Status		Task
 Finished	Migration
 Finished	Seeding
-Pending		Update Expense Management Index
+Finished	Update Expense Management Index
 Pending		Update Expense Management Create
 Pending		Update Expense Management Edit/Delete
 Pending		Implement in Overview/Dashboard
