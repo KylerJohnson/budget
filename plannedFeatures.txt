@@ -3,12 +3,12 @@ Topic: Add a credit class that will track available funds much like
 
 Tasks:
 Status		Task
-Pending		Migration
-Pending		Seeding
-Pending		Index/Overview
-Pending		Create
-Pending		Edit/Delete
-Pending		Incorporate available funds into monthly pie chart
+Finished	Migration
+Finished	Seeding
+Finished	Index/Overview
+Finished	Create
+Finished	Edit/Delete
+Finished	Incorporate available funds into monthly pie chart
 Pending		Incorporate available funds into overview
 Pending		Incorporate into analytics
 
@@ -20,8 +20,8 @@ Topic: Add an "at least" or "at most" type field to monthly targets.
 
 Tasks:
 Status		Task
-Pending		Migration
-Pending		Seeding
+Finished	Migration
+Finished	Seeding
 Pending		Update Expense Management Index
 Pending		Update Expense Management Create
 Pending		Update Expense Management Edit/Delete
@@ -31,6 +31,8 @@ Pending		Implement in Analytics
 Miscellaneous:
 Status		Task
 Pending		Make tables sortable
-Finished	Add more colors for graphs
+Pending		Add more colors for graphs
 Pending		Allow user to specify number of months for historical
 				spending graph.
+Pending		Implement monthly expense adds (Lavavel job or something)
+Pending		Add ajax page for chart data (protects against xss)

@@ -19,22 +19,26 @@ class ExpenseTypeTableSeeder extends Seeder
 
 		App\ExpenseType::create([
 			'name' => 'Food',
-			'monthly_budget' => 300.00
+			'monthly_budget' => 300.00,
+			'at_most' => true
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Clothing',
-			'monthly_budget' => 200.00
+			'monthly_budget' => 200.00,
+			'at_most' => true
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Entertainment',
-			'monthly_budget' => 250.00
+			'monthly_budget' => 250.00,
+			'at_most' => true
 		]);
 
 		App\ExpenseType::create([
 			'name' => 'Alcohol',
-			'monthly_budget' => '150.00'
+			'monthly_budget' => '150.00',
+			'at_most' => true
 		]);
 
 		App\ExpenseType::create([
@@ -45,6 +49,8 @@ class ExpenseTypeTableSeeder extends Seeder
 
 		App\ExpenseType::create([
 			'name' => 'Car Payment',
+			'monthly_budget' => 200.00,
+			'at_most' => false,
 			'monthly_amount' => 200.00,
 			'recurring_expense' => true,
 			'set_recurring_end_date' => true,
@@ -59,6 +65,8 @@ class ExpenseTypeTableSeeder extends Seeder
 
 		App\ExpenseType::create([
 			'name' => 'Investments',
+			'monthly_budget' => 200.00,
+			'at_most' => false,
 			'monthly_amount' => 100.00,
 			'recurring_expense' => true
 		]);
@@ -71,7 +79,8 @@ class ExpenseTypeTableSeeder extends Seeder
 
 		App\ExpenseType::create([
 			'name' => 'Miscellaneous',
-			'monthly_budget' => 200.00
+			'monthly_budget' => 200.00,
+			'at_most' => true
 		]);
 
     }
