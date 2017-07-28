@@ -24,7 +24,7 @@ Finished	Migration
 Finished	Seeding
 Finished	Update Expense Management Index
 Finished	Update Expense Management Create
-Pending		Update Expense Management Edit/Delete
+Finished	Update Expense Management Edit/Delete
 Pending		Implement in Overview/Dashboard
 Pending		Implement in Analytics
 

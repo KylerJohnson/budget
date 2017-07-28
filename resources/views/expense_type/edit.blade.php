@@ -3,6 +3,26 @@
 @section('scripts')
 
 <script src="/js/form_functions.js"></script>
+<script>
+
+$(function(){
+	$("#monthly-budget-at-most").on("click", function(){
+		// change button text
+		$("#monthly-budget-display").html("At most <span class='caret'></span>");
+
+		// change hidden field value
+		$("#at-most-input").val("1");
+	});
+
+	$("#monthly-budget-at-least").on("click", function(){
+		// change button text
+		$("#monthly-budget-display").html("At least <span class='caret'></span>");
+
+		// change hidden field value
+		$("#at-most-input").val("0");
+	});
+});
+</script>
 
 @endsection
 
@@ -65,6 +85,20 @@
 			<div class="form-group">
 				<label for="monthly_budget">Monthly Budget</label>
 				<div class="input-group">
+					<div class="input-group-btn">
+						<button type="button" id="monthly-budget-display" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							@if(!is_null(old('at_most')))
+								{{ old('at_most') == "0" ? "At least":"At most" }}
+							@else
+								{{ $expense_type->at_most == "0" ? "At least":"At most" }}
+							@endif
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li id="monthly-budget-at-most" class="pointer"><a>At most</a></li>
+							<li id="monthly-budget-at-least" class="pointer"><a>At least</a></li>
+						</ul>
+					</div>
 					<span class="input-group-addon">$</span>
 					<input type="text" id="monthly_budget" name="monthly_budget" class="form-control"
 						@if(old('monthly_budget'))
@@ -73,6 +107,13 @@
 							value="{{ $expense_type->monthly_budget }}"
 						@endif
 					>
+					<input type="text" id="at-most-input" name="at_most"
+						@if(!is_null(old('at_most')))
+							value="{{ old('at_most') === '0'? 0:1 }}"
+						@else
+							value="{{ $expense_type->at_most === '0'? 0:1 }}"
+						@endif
+					hidden>
 				</div>
 			</div>
 			<fieldset class="form-group">
