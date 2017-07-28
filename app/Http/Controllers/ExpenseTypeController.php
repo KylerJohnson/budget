@@ -53,6 +53,10 @@ class ExpenseTypeController extends Controller
 			'recurring_end_date' => 'required_if:set_recurring_end_date,1'
 		]);
 
+		$validator->sometimes('at_most', 'required|boolean', function($data){
+			return !is_null($data->monthly_budget);
+		});
+
 		$validator->sometimes('monthly_amount', 'numeric', function($data){
 			return $data->recurring_expense === "1";
 		});
@@ -75,6 +79,7 @@ class ExpenseTypeController extends Controller
 
 		$expense_type->name = $request->expense_type;
 		$expense_type->monthly_budget = $request->monthly_budget;
+		$expense_type->at_most = $request->at_most;
 		$expense_type->monthly_amount = $request->monthly_amount;
 		$expense_type->recurring_expense = $request->recurring_expense;
 		$expense_type->set_recurring_end_date = $request->set_recurring_end_date;

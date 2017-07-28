@@ -23,7 +23,7 @@ Status		Task
 Finished	Migration
 Finished	Seeding
 Finished	Update Expense Management Index
-Pending		Update Expense Management Create
+Finished	Update Expense Management Create
 Pending		Update Expense Management Edit/Delete
 Pending		Implement in Overview/Dashboard
 Pending		Implement in Analytics
