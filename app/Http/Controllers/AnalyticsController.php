@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Expense;
 use App\ExpenseType;
+use App\Analytics;
 use DateTime;
 
 class AnalyticsController extends Controller
@@ -26,6 +27,23 @@ class AnalyticsController extends Controller
 
 		$expense_totals = Expense::allExpenseTotals();
 
-		return view('analytics.index', compact('current_month_expenses', 'current_month_expense_totals', 'expense_totals', 'date'));
+		$expense_types = ExpenseType::orderBy('name')->get();
+
+		$successes = Analytics::successes($expense_totals, $expense_types);
+
+		$improvement = Analytics::improvement($expense_totals, $expense_types);
+
+		return view(
+			'analytics.index', 
+			compact(
+				'current_month_expenses',
+				'current_month_expense_totals',
+				'expense_totals',
+				'expense_types',
+				'successes',
+				'improvement',
+				'date'
+			)
+		);
 	}
 }

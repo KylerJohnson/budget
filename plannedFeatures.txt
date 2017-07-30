@@ -36,3 +36,12 @@ Pending		Allow user to specify number of months for historical
 				spending graph.
 Pending		Implement monthly expense adds (Lavavel job or something)
 Pending		Add ajax page for chart data (protects against xss)
+
+Ongoing:
+
+Check that application runs correctly with no data.
+Status: Failing
+
+Error Page		Issue
+/expenses		Undefined variable: expense_totals
+/analytics		Undefined variable: expense_totals
