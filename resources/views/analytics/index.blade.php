@@ -105,16 +105,21 @@ $(".chart-legend").html(historicalSpendingChart.generateLegend());
 	<div class="col-md-6">
 		<h2>Areas of success</h2>
 		<ul>
-			@foreach($successes as $success)
-				<li>{{ $success['message'] }}</li>
+			@foreach($target_analytics as $expense_type=>$analytics)
+				@if($analytics['message_success'])
+					<li>{{ $analytics['message_success'] }}</li>
+				@endif
 			@endforeach
 		</ul>
 	</div>
 	<div class="col-md-6">
 		<h2>Areas for improvement</h2>
 		<ul>
-			<li>You have exceeded your target for entertainment for the month</li>
-			<li>You have not met your target for investments</li>
+			@foreach($target_analytics as $expense_type=>$analytics)
+				@if($analytics['message_failure'])
+					<li>{{ $analytics['message_failure'] }}</li>
+				@endif
+			@endforeach
 		</ul>
 	</div>
 </div>

@@ -26,7 +26,7 @@ Finished	Update Expense Management Index
 Finished	Update Expense Management Create
 Finished	Update Expense Management Edit/Delete
 Finished	Implement in Overview/Dashboard
-Pending		Implement in Analytics
+Finished	Implement in Analytics
 
 Miscellaneous:
 Status		Task
