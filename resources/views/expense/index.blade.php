@@ -54,7 +54,7 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 </div>
 
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-lg-8">
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -67,11 +67,34 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 			<tbody>
 				@foreach($expense_types as $expense_type)
 					@if($expense_type->monthly_budget > 0)
-					<tr>
+					<tr
+						@php $available_spending = $expense_type->monthly_budget-$current_month_expense_totals[$expense_type->name]@endphp
+						@if($expense_type->at_most !== "0")
+							@if($available_spending < 0)
+								class="danger"
+							@elseif($available_spending <= .1*$expense_type->monthly_budget)
+								class="warning"
+							@elseif($available_spending > 0)
+								class="success"
+							@endif
+						@else
+							@if($available_spending <= 0)
+								class="success"
+							@elseif($available_spending <= .2*$expense_type->monthly_budget)
+								class="warning"
+							@elseif($available_spending > 0)
+								class="danger"
+							@endif
+							
+						@endif
+					>
 						<td>{{ $expense_type->name }}</td>
-						<td class="text-right">{{ number_format($current_month_expense_totals[$expense_type->name], '2', '.', '') }}</td>
-						<td class="text-right">{{ $expense_type->monthly_budget }}</td>
-						<td class="text-right">{{ number_format($expense_type->monthly_budget-$current_month_expense_totals[$expense_type->name], '2', '.', '') }}</td>
+						<td class="text-right">${{ number_format($current_month_expense_totals[$expense_type->name], '2', '.', '') }}</td>
+						<td class="text-right">{{ $expense_type->at_most === "0" ? "At least ":"At most " }}${{ $expense_type->monthly_budget }}</td>
+						<td class="text-right">
+							${{ number_format(abs($available_spending), '2', '.', '') }}
+							{{ ($expense_type->at_most !== "0" && $available_spending < 0) ? " over budget":"" }}
+						</td>
 					</tr>
 					@endif
 				@endforeach
@@ -84,10 +107,8 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 			<canvas id="currentMonthSpendingChart" width="400" height="400"></canvas>
 		</div>
 	</div>
-</div>
 
-<div class="row">
-	<div class="col-xs-12 chart-legend">
+	<div class="col-md-3 col-lg-12 chart-legend">
 	</div>
 </div>
 

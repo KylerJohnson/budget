@@ -59,7 +59,14 @@ $(function(){
 						@foreach ($expense_types as $expense_type)
 							<tr data-expense_type_id="{{ $expense_type->id }}">
 								<td>{{ $expense_type->name }}</td>
-								<td>{{ $expense_type->monthly_budget }}</td>
+								<td>
+									@php
+										if($expense_type->monthly_budget && !is_null($expense_type->at_most)){
+											echo ($expense_type->at_most == 1 ? 'At most ':'At least ');
+										}
+									@endphp
+									{{ $expense_type->monthly_budget }}
+								</td>
 								<td>{{ $expense_type->recurring_expense ? "Yes" : "No"}}</td>
 								<td>{{ $expense_type->recurring_expense? $expense_type->monthly_amount : "" }}</td>
 								<td>
