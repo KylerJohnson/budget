@@ -28,13 +28,8 @@ class AnalyticsController extends Controller
 		$expense_totals = Expense::allExpenseTotals();
 
 		$expense_types = ExpenseType::orderBy('name')->get();
-
-		$successes = Analytics::successes($expense_totals, $expense_types);
-
-		$improvement = Analytics::improvement($expense_totals, $expense_types);
 		
 		$target_analytics = Analytics::targetAnalytics($expense_totals, $expense_types);
-		//dd($target_analytics);
 
 		return view(
 			'analytics.index', 
@@ -43,8 +38,6 @@ class AnalyticsController extends Controller
 				'current_month_expense_totals',
 				'expense_totals',
 				'expense_types',
-				'successes',
-				'improvement',
 				'target_analytics',
 				'date'
 			)
