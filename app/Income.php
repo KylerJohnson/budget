@@ -11,6 +11,10 @@ class Income extends Model
 
 	protected $table = 'income';
 
+	public function income_type(){
+		return $this->belongsTo('App\IncomeType');
+	}
+
 	public function scopeYearAndMonth($query, DateTime $date){
 		return $query->whereYear('date', '=', $date->format('Y'))
 				->whereMonth('date', '=', $date->format('m'));
