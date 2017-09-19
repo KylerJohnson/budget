@@ -15,7 +15,7 @@
 		<li {!! $request_parameters[0]== 'analytics' ? 'class="active"':'' !!}>
 			<a href="/analytics">
 				Analytics
-				@if($request_parameters[0] == 'expenses')
+				@if($request_parameters[0] == 'analytics')
 					<span class="sr-only">(current)</span>
 				@endif
 			</a>
@@ -23,7 +23,7 @@
 		<li {!! $request_parameters[0]== 'expense_management' ? 'class="active"':'' !!}>
 			<a href="/expense_management">
 				Expense Management
-				@if($request_parameters[0] == 'expenses')
+				@if($request_parameters[0] == 'expense_management')
 					<span class="sr-only">(current)</span>
 				@endif
 			</a>
