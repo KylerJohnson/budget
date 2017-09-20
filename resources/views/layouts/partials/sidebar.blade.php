@@ -20,10 +20,10 @@
 				@endif
 			</a>
 		</li>
-		<li {!! $request_parameters[0]== 'expense_management' ? 'class="active"':'' !!}>
-			<a href="/expense_management">
-				Expense Management
-				@if($request_parameters[0] == 'expense_management')
+		<li {!! $request_parameters[0]== 'budget_settings' ? 'class="active"':'' !!}>
+			<a href="/budget_settings">
+				Budget Settings
+				@if($request_parameters[0] == 'budget_settings')
 					<span class="sr-only">(current)</span>
 				@endif
 			</a>

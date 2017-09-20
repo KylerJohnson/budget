@@ -35,6 +35,6 @@ Route::resource('expenses', 'ExpenseController');
 
 Route::resource('income', 'IncomeController');
 
-Route::resource('expense_management', 'ExpenseTypeController');
+Route::resource('budget_settings', 'BudgetSettingsController');
 
 Route::get('analytics', 'AnalyticsController@index');

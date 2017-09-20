@@ -31,7 +31,54 @@ $(function(){
 	
 <div class="row">
 	<div class="col-xs-12 page-title">
-		<h1>Expense Management</h1>
+		<h1>Budget Settings</h1>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<h2>Income Types</h2>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<div class="panel panel-default">
+			<table class="table table-striped clickable">
+				<thead>
+					<tr>
+						<th>Income Type</th>
+						<th>Monthly Income Amount</th>
+						<th>Recurring End Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (count($income_types)>0)
+						@foreach ($income_types as $income_type)
+							<tr data-income_type_id="{{ $income_type->id }}">
+								<td>{{ $income_type->name }}</td>
+								<td>{{ $income_type->monthly_amount }}</td>
+								<td>
+									@if($income_type->set_recurring_end_date)
+										{{ (new DateTime($income_type->recurring_end_date))->format('F j, Y') }}
+									@elseif($income_type->monthly_amount)
+										Indefinite Expense
+									@endif
+								</td>
+							</tr>
+						@endforeach
+					@else
+						We don't have any expenses to display!  (Should add an "Add some expenses" button)
+					@endif
+				</tbody>
+			</table>
+		</div>
+
+		<a href="expense_management/create">
+			<button class="btn btn-primary">
+				Add an income type
+			</button>
+		</a>
 	</div>
 </div>
 
@@ -92,5 +139,4 @@ $(function(){
 		</a>
 	</div>
 </div>
-
 @endsection
