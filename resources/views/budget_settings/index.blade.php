@@ -6,11 +6,22 @@
 
 $(function(){
 	$(".clickable td").on("click", function(){
-		window.location = "/expense_management/"+$(this).parent().attr("data-expense_type_id")+"/edit";
+		var data_type = $(this).parents('table').attr("data-resource-type");
+		console.log(data_type);
+
+		switch(data_type){
+			case 'expense':
+				// TODO: Change the endpoint to /expense_types
+				window.location = "/budget_settings/expense_types/"+$(this).parent().attr("data-resource_type_id")+"/edit";
+				break;
+			case 'income':
+				window.location = "/budget_settings/income_types/"+$(this).parent().attr("data-resource_type_id")+"/edit";
+				break;
+		}
 	});
 })
 
-</script>
+</script><t_%9>
 
 @endsection
 
@@ -44,7 +55,7 @@ $(function(){
 <div class="row">
 	<div class="col-xs-12">
 		<div class="panel panel-default">
-			<table class="table table-striped clickable">
+			<table class="table table-striped clickable" data-resource-type="income">
 				<thead>
 					<tr>
 						<th>Income Type</th>
@@ -55,7 +66,7 @@ $(function(){
 				<tbody>
 					@if (count($income_types)>0)
 						@foreach ($income_types as $income_type)
-							<tr data-income_type_id="{{ $income_type->id }}">
+							<tr data-resource_type_id="{{ $income_type->id }}">
 								<td>{{ $income_type->name }}</td>
 								<td>{{ $income_type->monthly_amount }}</td>
 								<td>
@@ -74,7 +85,7 @@ $(function(){
 			</table>
 		</div>
 
-		<a href="expense_management/create">
+		<a href="{{ route('budget_settings.income_types.create') }}">
 			<button class="btn btn-primary">
 				Add an income type
 			</button>
@@ -91,7 +102,7 @@ $(function(){
 <div class="row">
 	<div class="col-xs-12">
 		<div class="panel panel-default">
-			<table class="table table-striped clickable">
+			<table class="table table-striped clickable" data-resource-type="expense">
 				<thead>
 					<tr>
 						<th>Expense Type</th>
@@ -104,7 +115,7 @@ $(function(){
 				<tbody>
 					@if (count($expense_types)>0)
 						@foreach ($expense_types as $expense_type)
-							<tr data-expense_type_id="{{ $expense_type->id }}">
+							<tr data-resource_type_id="{{ $expense_type->id }}">
 								<td>{{ $expense_type->name }}</td>
 								<td>
 									@php
@@ -132,7 +143,7 @@ $(function(){
 			</table>
 		</div>
 
-		<a href="expense_management/create">
+		<a href="{{ route('budget_settings.expense_types.create') }}">
 			<button class="btn btn-primary">
 				Add an expense type
 			</button>

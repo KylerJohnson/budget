@@ -102,7 +102,7 @@ class ExpenseTypeController extends Controller
 		$request->session()->flash('status', 'Your expense type was added successfully!');
 		$request->session()->flash('alert_type', 'alert-success');
 
-		return redirect('expense_management');
+		return redirect('budget_settings');
     }
 
     /**
@@ -122,9 +122,8 @@ class ExpenseTypeController extends Controller
      * @param  \App\ExpenseType  $expenseType
      * @return \Illuminate\Http\Response
      */
-    public function edit(ExpenseType $expense_management)
+    public function edit(ExpenseType $expense_type)
     {
-		$expense_type = $expense_management;
 		return view('expense_type.edit', compact('expense_type'));
     }
 
@@ -135,11 +134,9 @@ class ExpenseTypeController extends Controller
      * @param  \App\ExpenseType  $expenseType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ExpenseType $expense_management)
+    public function update(Request $request, ExpenseType $expense_type)
     {
 		$next_month = new DateTime((new DateTime())->add(new DateInterval('P1M'))->format('Y-m'));
-
-		$expense_type = $expense_management;
 
 		$validator = Validator::make($request->all(), [
 			'expense_type' => ['required','regex:/^(\w+\s)*+\w+$/', 'min:3'],
@@ -190,7 +187,7 @@ class ExpenseTypeController extends Controller
 		$request->session()->flash('status', 'Your expense type was updated successfully!');
 		$request->session()->flash('alert_type', 'alert-success');
 
-		return redirect('expense_management');
+		return redirect('budget_settings');
     }
 
     /**
@@ -199,10 +196,8 @@ class ExpenseTypeController extends Controller
      * @param  \App\ExpenseType  $expenseType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ExpenseType $expense_management, Request $request)
+    public function destroy(ExpenseType $expense_type, Request $request)
     {
-		$expense_type = $expense_management;
-
 		// Check that expense type is not being used by an expense
 		$expenses = Expense::where('expense_type_id', $expense_type->id)->get();
 		
@@ -210,7 +205,7 @@ class ExpenseTypeController extends Controller
 			$request->session()->flash('status', 'This expense type is being used and cannot be deleted.');
 			$request->session()->flash('alert_type', 'alert-danger');
 
-			return redirect('expense_management');
+			return redirect('budget_settings');
 		}
 
 		try{
@@ -219,12 +214,12 @@ class ExpenseTypeController extends Controller
 			$request->session()->flash('status', 'Your expense type was deleted successfully!');
 			$request->session()->flash('alert_type', 'alert-success');
 
-			return redirect('expense_management');
+			return redirect('budget_settings');
 		}catch(\Exception $e){
 			$request->session()->flash('status', 'There was an error processing your request.  Please try again later.');
 			$request->session()->flash('alert_type', 'alert-danger');
 
-			return redirect('expense_management');
+			return redirect('budget_settings');
 		}
     }
 }

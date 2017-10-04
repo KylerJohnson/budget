@@ -35,6 +35,11 @@ Route::resource('expenses', 'ExpenseController');
 
 Route::resource('income', 'IncomeController');
 
-Route::resource('budget_settings', 'BudgetSettingsController');
+Route::prefix('budget_settings')->group(function(){
+	Route::get('/', 'BudgetSettingsController@index');
+
+	Route::resource('expense_types', 'ExpenseTypeController', ['as' => 'budget_settings']);
+	Route::resource('income_types', 'IncomeTypeController', ['as' => 'budget_settings']);
+});
 
 Route::get('analytics', 'AnalyticsController@index');
