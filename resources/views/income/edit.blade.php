@@ -49,6 +49,24 @@
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 			<div class="form-group">
+				<label for="income_type">Income Type</label>
+				<select id="income_type" name="income_type" class="form-control">
+					<option value="">Select One</option>
+					@foreach($income_types as $income_type)
+						<option 
+							value="{{ $income_type->id }}"
+							@if(old('income_type'))
+								{{ old('income_type') == $income_type->id ? "SELECTED":"" }}
+							@else
+								{{ $income->income_type_id == $income_type->id ? "SELECTED":"" }}
+							@endif
+						>
+							{{ $income_type->name }}
+						</option>
+					@endforeach
+				</select>
+			</div>
+			<div class="form-group">
 				<label for="description">Description</label>
 				<input type="text" id="description" name="description" class="form-control"
 					@if(old('description'))
