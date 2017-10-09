@@ -21,6 +21,20 @@
 		<form action="/income" method="POST">
 			{{ csrf_field() }}
 			<div class="form-group">
+				<label for="income-type">Income Type</label>
+				<select id="income-type" name="income_type" class="form-control">
+					<option value="">Select One</option>
+					@foreach($income_types as $income_type)
+						<option 
+							value="{{ $income_type->id }}"
+							{{ old('income_type') == $income_type->id ? "SELECTED":"" }}
+						>
+							{{ $income_type->name }}
+						</option>
+					@endforeach
+				</select>
+			</div>
+			<div class="form-group">
 				<label for="description">Description</label>
 				<input type="text" id="description" name="description" class="form-control" value="{{ old('description') }}">
 			</div>

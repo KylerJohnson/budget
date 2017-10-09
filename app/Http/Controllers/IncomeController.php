@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Income;
+use App\IncomeType;
 use Illuminate\Http\Request;
 use DateTime;
 
@@ -32,8 +33,10 @@ class IncomeController extends Controller
 		}catch (\Exception $e){
 			$date = new DateTime;
 		}
+		
+		$income_types = IncomeType::select('id', 'name')->get();
 
-		return view('income.create', compact('date'));
+		return view('income.create', compact('date', 'income_types'));
     }
 
     /**
@@ -45,6 +48,7 @@ class IncomeController extends Controller
     public function store(Request $request)
     {
 		$this->validate($request, [
+			'income_type' => 'required|exists:income_types,id',
 			'description' => 'required|min:5',
 			'amount' => 'required|numeric',
 			'date' => 'required|date'
@@ -52,6 +56,7 @@ class IncomeController extends Controller
 
 		$income = new Income;
 
+		$income->income_type_id = $request->income_type;
 		$income->description = $request->description;
 		$income->amount = $request->amount;
 		$income->date = $request->date;
