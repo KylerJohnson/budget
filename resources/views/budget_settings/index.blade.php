@@ -68,11 +68,15 @@ $(function(){
 						@foreach ($income_types as $income_type)
 							<tr data-resource_type_id="{{ $income_type->id }}">
 								<td>{{ $income_type->name }}</td>
-								<td>{{ $income_type->monthly_amount }}</td>
 								<td>
-									@if($income_type->set_recurring_end_date)
+									@if($income_type->recurring_income)
+										{{ $income_type->monthly_amount }}
+									@endif
+								</td>
+								<td>
+									@if($income_type->recurring_income && $income_type->set_recurring_end_date)
 										{{ (new DateTime($income_type->recurring_end_date))->format('F j, Y') }}
-									@elseif($income_type->monthly_amount)
+									@elseif($income_type->recurring_income && $income_type->monthly_amount)
 										Indefinite Expense
 									@endif
 								</td>

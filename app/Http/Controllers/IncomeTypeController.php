@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Income;
 use App\IncomeType;
 use Illuminate\Http\Request;
+use DateTime;
+use DateInterval;
+use Validator;
 
 class IncomeTypeController extends Controller
 {
@@ -39,16 +43,11 @@ class IncomeTypeController extends Controller
 
 		$validator = Validator::make($request->all(), [
 			'income_type' => ['required','regex:/^(\w+\s)*+\w+$/', 'min:3', 'unique:income_types,name'],
-			'monthly_budget' => 'nullable|numeric',
 			'recurring_income' => 'required|boolean',
 			'monthly_amount' => 'required_if:recurring_income,1',
 			'set_recurring_end_date' => 'required_if:recurring_income,1',
 			'recurring_end_date' => 'required_if:set_recurring_end_date,1'
 		]);
-
-		$validator->sometimes('at_most', 'required|boolean', function($data){
-			return !is_null($data->monthly_budget);
-		});
 
 		$validator->sometimes('monthly_amount', 'numeric', function($data){
 			return $data->recurring_income === "1";
@@ -71,8 +70,6 @@ class IncomeTypeController extends Controller
 		$income_type = new IncomeType;
 
 		$income_type->name = $request->income_type;
-		$income_type->monthly_budget = $request->monthly_budget;
-		$income_type->at_most = $request->at_most;
 		$income_type->monthly_amount = $request->monthly_amount;
 		$income_type->recurring_income = $request->recurring_income;
 		$income_type->set_recurring_end_date = $request->set_recurring_end_date;
@@ -133,7 +130,6 @@ class IncomeTypeController extends Controller
 
 		$validator = Validator::make($request->all(), [
 			'income_type' => ['required','regex:/^(\w+\s)*+\w+$/', 'min:3'],
-			'monthly_budget' => 'nullable|numeric',
 			'recurring_income' => 'required|boolean',
 			'monthly_amount' => 'required_if:recurring_income,1',
 			'set_recurring_end_date' => 'required_if:recurring_income,1',
@@ -167,10 +163,8 @@ class IncomeTypeController extends Controller
 		}
 
 		$income_type->name = $request->income_type;
-		$income_type->monthly_budget = $request->monthly_budget;
-		$income_type->at_most = $request->at_most;
-		$income_type->monthly_amount = $request->monthly_amount;
 		$income_type->recurring_income = $request->recurring_income;
+		$income_type->monthly_amount = $request->monthly_amount;
 		$income_type->set_recurring_end_date = $request->set_recurring_end_date;
 		$income_type->recurring_end_date = $request->recurring_end_date;
 

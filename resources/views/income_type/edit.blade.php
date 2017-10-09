@@ -49,7 +49,7 @@ $(function(){
 						<form action="/budget_settings/income_types/{{ $income_type->id }}" method="POST" class="inline">
 							{{ csrf_field() }}
 							{{ method_field('DELETE') }}
-							<button type="submit" class="btn btn-danger">Delete Expense Type</button>
+							<button type="submit" class="btn btn-danger">Delete Income Type</button>
 						</form>
 					</div>
 					</div>
@@ -72,7 +72,7 @@ $(function(){
 			{{ csrf_field() }}
 			{{ method_field('PUT') }}
 			<div class="form-group">
-				<label for="income_type">Expense Type</label>
+				<label for="income_type">Income Type</label>
 				<input type="text" id="income_type" name="income_type" class="form-control"
 					@if(old('income_type'))
 						value="{{ old('income_type') }}"
@@ -80,44 +80,9 @@ $(function(){
 						value="{{ $income_type->name }}"
 					@endif
 				>
-
-			</div>
-			<div class="form-group">
-				<label for="monthly_budget">Monthly Budget</label>
-				<div class="input-group">
-					<div class="input-group-btn">
-						<button type="button" id="monthly-budget-display" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							@if(!is_null(old('at_most')))
-								{{ old('at_most') == "0" ? "At least":"At most" }}
-							@else
-								{{ $income_type->at_most == "0" ? "At least":"At most" }}
-							@endif
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li id="monthly-budget-at-most" class="pointer"><a>At most</a></li>
-							<li id="monthly-budget-at-least" class="pointer"><a>At least</a></li>
-						</ul>
-					</div>
-					<span class="input-group-addon">$</span>
-					<input type="text" id="monthly_budget" name="monthly_budget" class="form-control"
-						@if(old('monthly_budget'))
-							value="{{ old('monthly_budget') }}"
-						@else
-							value="{{ $income_type->monthly_budget }}"
-						@endif
-					>
-					<input type="text" id="at-most-input" name="at_most"
-						@if(!is_null(old('at_most')))
-							value="{{ old('at_most') === '0'? 0:1 }}"
-						@else
-							value="{{ $income_type->at_most === '0'? 0:1 }}"
-						@endif
-					hidden>
-				</div>
 			</div>
 			<fieldset class="form-group">
-				<legend>Is this a recurring income?</legend>
+				<legend>Is this recurring income?</legend>
 				<div class="radio">
 					<label>
 						<input type="radio" name="recurring_income" data-toggle_target="recurring_income_hide" value="1"
@@ -206,7 +171,7 @@ $(function(){
 								value="{{ $income_type->recurring_end_date }}"
 							@endif
 						>
-						<span class="help-block">An income will be added each month starting next month up to and including the month of the date provided.</span>
+						<span class="help-block">Income will be added each month starting next month up to and including the month of the date provided.</span>
 					</div>
 				</div>
 			</div>

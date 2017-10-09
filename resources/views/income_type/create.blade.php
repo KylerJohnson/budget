@@ -51,23 +51,6 @@ $(function(){
 				<label for="income_type">Income Type</label>
 				<input type="text" id="income_type" name="income_type" class="form-control" value="{{ old('income_type') }}">
 			</div>
-			<div class="form-group">
-				<label for="monthly_budget">Monthly Budget</label>
-				<div class="input-group">
-					<div class="input-group-btn">
-						<button type="button" id="monthly-budget-display" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							{{ old('at_most') === "0" ? "At least":"At most" }} <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu">
-							<li id="monthly-budget-at-most" class="pointer"><a>At most</a></li>
-							<li id="monthly-budget-at-least" class="pointer"><a>At least</a></li>
-						</ul>
-					</div>
-					<span class="input-group-addon">$</span>
-					<input type="text" id="monthly-budget" name="monthly_budget" class="form-control" value="{{ old('monthly_budget') }}">
-					<input type="text" id="at-most-input" name="at_most" value="{{ old('at_most') === '0'? 0:1 }}" hidden>
-				</div>
-			</div>
 			<fieldset class="form-group">
 				<legend>Is this recurring income?</legend>
 				<div class="radio">
@@ -110,7 +93,7 @@ $(function(){
 					<div class="form-group">
 						<label for="recurring-end-date">Recurring End Date</label>
 						<input type="date" id="recurring-end-date" name="recurring_end_date" class="form-control" value="{{ old('recurring_end_date') }}">
-						<span class="help-block">An income will be added each month starting next month up to and including the month of the date provided.</span>
+						<span class="help-block">Income will be added each month starting next month up to and including the month of the date provided.</span>
 					</div>
 					<div class="checkbox">
 						<label>
