@@ -19,6 +19,7 @@ class IncomeTypeTableSeeder extends Seeder
 
 		App\IncomeType::create([
 			'name' => 'Employment Salary',
+			'recurring_income' => true,
 			'monthly_amount' => 4000
 		]);
 

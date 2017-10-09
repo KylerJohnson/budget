@@ -16,6 +16,7 @@ class CreateIncomeTypesTable extends Migration
         Schema::create('income_types', function (Blueprint $table) {
             $table->increments('id');
 			$table->string('name');
+			$table->boolean('recurring_income');
 			$table->decimal('monthly_amount', 6, 2)->nullable();
 			$table->boolean('set_recurring_end_date')->nullable();
 			$table->date('recurring_end_date')->nullable();
