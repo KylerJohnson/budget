@@ -119,8 +119,9 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 			<table class="table table-striped clickable" data-table_type="income">
 				<thead>
 					<tr>
-						<th>Description</th>
+						<th>Income Type</th>
 						<th>Amount</th>
+						<th>Description</th>
 						<th>Date</th>
 					</tr>
 				</thead>
@@ -128,8 +129,9 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 					@if (count($current_month_income)>0)
 						@foreach ($current_month_income as $income)
 							<tr data-income_id="{{ $income->id }}">
-								<td>{{ $income->description }}</td>
+								<td>{{ $income->income_type->name }}</td>
 								<td>{{ $income->amount }}</td>
+								<td>{{ $income->description }}</td>
 								<td>{{ $income->date }}</td>
 							</tr>
 						@endforeach

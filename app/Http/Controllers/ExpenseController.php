@@ -48,7 +48,7 @@ class ExpenseController extends Controller
 		$expense_types = ExpenseType::orderBy('name')->get();
 
 		// For the table of income.
-		$current_month_income = Income::yearAndMonth($date)->get();
+		$current_month_income = Income::yearAndMonth($date)->with('income_type')->get();
 
 		return view('expense.index', compact('current_month_expenses', 'current_month_income', 'current_month_expense_totals', 'current_month_available_funds', 'expense_types', 'date'));
     }
