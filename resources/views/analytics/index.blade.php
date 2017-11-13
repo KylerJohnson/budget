@@ -9,13 +9,13 @@
 // Initialize variables from server
 var current_month_expense_totals = {!! json_encode($current_month_expense_totals) !!};
 
-var expense_totals = {!! json_encode($expense_totals) !!};
+var budget_totals = {!! json_encode($budget_totals) !!};
 
 // Current Month Spending Chart
 var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, {title: "Spending for {{ $date->format('F Y') }}"});
 
 // Historical Spending Chart
-var historicalSpendingChart = plotLineChart($("#historicalSpendingChart"), expense_totals, {title: "Historical Spending by Month"});
+var historicalSpendingChart = plotLineChart($("#historicalSpendingChart"), budget_totals, {title: "Historical Spending by Month"});
 
 $(".chart-legend").html(historicalSpendingChart.generateLegend());
 
