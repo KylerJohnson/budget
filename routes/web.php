@@ -22,6 +22,8 @@ Route::get('expenses/{expense}/edit', 'ExpenseController@edit');
 Route::get('expenses/{month}/{year}', 'ExpenseController@index');
 Route::get('expenses/create/{month}/{year}', 'ExpenseController@create');
 
+Route::get('income/create/{month}/{year}', 'IncomeController@create');
+
 /*function($month, $year){
 	return redirect()->action(
 		'ExpenseController@index', ['month'=>$month, 'year'=>$year]
@@ -31,6 +33,13 @@ Route::get('expenses/create/{month}/{year}', 'ExpenseController@create');
 
 Route::resource('expenses', 'ExpenseController');
 
-Route::resource('expense_management', 'ExpenseTypeController');
+Route::resource('income', 'IncomeController');
+
+Route::prefix('budget_settings')->group(function(){
+	Route::get('/', 'BudgetSettingsController@index');
+
+	Route::resource('expense_types', 'ExpenseTypeController', ['as' => 'budget_settings']);
+	Route::resource('income_types', 'IncomeTypeController', ['as' => 'budget_settings']);
+});
 
 Route::get('analytics', 'AnalyticsController@index');

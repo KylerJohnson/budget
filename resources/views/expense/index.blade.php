@@ -9,12 +9,20 @@
 // Initialize variables from server
 var current_month_expense_totals = {!! json_encode($current_month_expense_totals) !!};
 
+current_month_expense_totals['Available Funds'] = {{ $current_month_available_funds }};
+
 // Current Month Spending Chart
 var currentMonthSpendingChart = plotChart($("#currentMonthSpendingChart"), "pie", current_month_expense_totals, {title: "Spending for {{ $date->format('F Y') }}"});
 
 $(function(){
 	$(".clickable td").on("click", function(){
-		window.location = "/expenses/"+$(this).parent().attr("data-expenseId")+"/edit";
+		var table_type = $(this).closest("table").attr("data-table_type");
+		console.log('table_type');
+		if(table_type == "expense"){
+			window.location = "/expenses/"+$(this).parent().attr("data-expense_id")+"/edit";
+		}else if(table_type == "income"){
+			window.location = "/income/"+$(this).parent().attr("data-income_id")+"/edit";
+		}
 	});
 })
 
@@ -41,7 +49,7 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 	
 <div class="row">
 	<div class="col-xs-12 page-title">
-		<h1>Expenses for {{ $date->format('F Y') }}</h1>
+		<h1>Overview for {{ $date->format('F Y') }}</h1>
 	</div>
 </div>
 
@@ -106,8 +114,42 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 
 <div class="row">
 	<div class="col-xs-12">
+		<h2>Income</h2>
 		<div class="panel panel-default">
-			<table class="table table-striped clickable">
+			<table class="table table-striped clickable" data-table_type="income">
+				<thead>
+					<tr>
+						<th>Income Type</th>
+						<th>Amount</th>
+						<th>Description</th>
+						<th>Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					@if (count($current_month_income)>0)
+						@foreach ($current_month_income as $income)
+							<tr data-income_id="{{ $income->id }}">
+								<td>{{ $income->income_type->name }}</td>
+								<td>{{ $income->amount }}</td>
+								<td>{{ $income->description }}</td>
+								<td>{{ $income->date }}</td>
+							</tr>
+						@endforeach
+					@else
+						You don't have any income listed.  Add an income entry by clicking Add income below.
+					@endif
+				</tbody>
+			</table>
+		</div>
+		<a href="/income/create/{{ $date->format('m') }}/{{ $date->format('Y') }}"><button class="btn btn-primary">Add income</button></a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12">
+		<h2>Expenses</h2>
+		<div class="panel panel-default">
+			<table class="table table-striped clickable" data-table_type="expense">
 				<thead>
 					<tr>
 						<th>Expense Type</th>
@@ -119,7 +161,7 @@ $(".chart-legend").html(currentMonthSpendingChart.generateLegend());
 				<tbody>
 					@if (count($current_month_expenses)>0)
 						@foreach ($current_month_expenses as $expense)
-							<tr data-expenseId="{{ $expense->id }}">
+							<tr data-expense_id="{{ $expense->id }}">
 								<td>{{ $expense->expense_type->name }}</td>
 								<td>{{ $expense->amount }}</td>
 								<td>{{ $expense->description }}</td>
